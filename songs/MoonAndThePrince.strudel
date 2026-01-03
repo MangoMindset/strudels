@@ -1,0 +1,12 @@
+setCps(120/60/8)
+
+const bassline = "0@2 - 0@2 - 0@4 3@2 3@2 2@2 0@2 -@2 4@8 1@2 -@2"
+
+$: n(bassline).scale("<e0:diminished@2 g0:diminished e0:diminished>")
+  .room(4)
+  .distort(0.5)
+  .sound("gm_acoustic_bass")
+  .lpf(1200)
+.lastOf(4,x=>x.trans(-12))
+
+$: s("bd:3*8").sometimesBy(0.025,x=>x.ply("3"))
