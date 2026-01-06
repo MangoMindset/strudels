@@ -1,0 +1,69 @@
+// licensed with CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
+// by Alejandro Sánchez Medina
+//@title Retox
+register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
+register('acidenv', (x, pat) => pat.lpf(100)
+        .lpenv(x * 9).lps(.2).lpd(.12)
+)
+setcps(150/2048)
+
+const retox_trunk = seq(
+  ["[[[[9 -] 7] [- 9 - 7@2 - 7 9]@2 [- 7@2 -]]]",
+            "[9 - 10 11 10@2 9 7@3 @2- 4 6 7 -]"],
+           )
+
+const retox_volta_1 = "[[[9 -] 7@2 -] -@3]"
+const retox_volta_2 = seq(
+   "[[- 9] - [- 7] -]",
+   "[[9 6 7 -] [- 10 9@2]]",
+   "[[- 7@2 -] [6 7@2 -]]",
+   "[9 - 10 11 10@2 9 7]"
+  )
+           
+
+const float_test = "7 3 7 [5 6]"
+
+const rand_scrub = seq(
+  "0.75 0.125 [0.375 0.46875] 0.4375",
+  "0.4375 0.1875 0.3125 0.875",
+  "0.75 0.8125 [0.484375 0.375] 0.5625",
+  "0.5625 0.0625 0.4375 [0.84375 0.15625]"
+  ).fast(1)
+
+const drums_volta_2 = seq(
+  "[0.4375 0.9375@3] [- 0.9375@3] 0.3125 0.875"
+).fast(4)
+
+await samples('github:yaxu/clean-breaks/main/')
+
+stack(
+  seq(retox_trunk,
+      cat(
+        retox_volta_1,
+        retox_volta_1,
+        retox_volta_1,
+        retox_volta_2))
+  .diode(0.6)
+  .sound("gm_music_box")
+  .compressor("-15:20:10:0.1:.02")
+  .scale("C2:Minor")
+  .gain(slider(0)),
+  float_test
+  .compressor("-15:20:10:0.1:.02")
+  .acidenv("<0.2 0.4 0.25 0.35>")
+  .sound("saw")
+  .scale("C1:Minor")
+  .gain(slider(0.655)),
+  s("amen2*2").fit()
+  //.scrubResolution(16)
+  .scrub(rand_scrub)
+  //.scrub(drums_volta_2)
+  .gain(slider(0.496))
+  .lastOf(4, x=>x
+    //.someCycles(x=>x
+      .bpf(1200)
+      .bpq("3 2 1 [0.5 0.25]")
+         //)
+),
+ //sound("white*8").decay(0.15).gain(0.3)
+)

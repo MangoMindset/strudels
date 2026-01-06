@@ -1,0 +1,49 @@
+//@title Jerk It Out
+register('stChords',p=>p
+  .sound("gm_electric_guitar_jazz")
+  .sustain(10)
+  .chord()
+  .voicing()
+  .gain(slider(0.23))
+)
+register('stBass',p=>p
+  .gain(slider(0.157))
+  .distort(1.5)
+  .sound("gm_reed_organ")
+  .scale("E0:major")
+  )
+setCps(120/60/16)
+
+const riffA = "[9@2 11 9 11 - [[11 -]|11@2]@2 8@2 10 8 9 [[9 -]|9@2]@2 9]*2"
+const riffFill = "[9!2 11 9 11!4 8!2 10 8 9!4]*2"
+const riffChorus1 = "[0 2] [1 2]".trans(12).attack(0.4)
+const riffChorus2 = "[0 2] 1".trans(12).attack(0.4)
+
+const chordsA = "[[G#m|G#m!2] B [F#@3 E@5|F# G#m]@2]*2"
+const chordsFill = "[G#m*2 B F#*2 E]*2"
+const chordsChorus1 = "E^7 G#m F# G#m"
+const chordsChorus2 = "E^7 G#m F#@2"
+
+const clickA = s("white*4").decay(0.1)
+const clickFill = s("[white*2 white]*2").decay(0.1)
+const clickChorus = s("hh:2*4").distort(1)
+
+const stackA = stack(
+  riffA.stBass(),chordsA.stChords(),clickA
+)
+const stackFill = stack(
+  riffFill.stBass(),chordsFill.stChords(),clickFill
+)
+const stackChorus1 = stack(
+  riffChorus1.stBass(),chordsChorus1.stChords(),clickChorus
+)
+const stackChorus2 = stack(
+  riffChorus2.stBass(),chordsChorus2.stChords(),clickChorus
+)
+
+arrange(
+  [1,stackChorus2],
+  [3,stackA],
+  [0.5,stackFill],
+  [1,stackChorus1],
+)

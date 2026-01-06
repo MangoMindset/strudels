@@ -1,0 +1,21 @@
+//@title AmenBreakBetterBreakslicer
+setCps(100/60/4)
+await samples('github:yaxu/clean-breaks/main');
+register('break', (beginPat, loopAtPat, pat) => {
+  return pat.set.out(begin(beginPat)).clip(1)
+    .loopat(loopAtPat).fast(loopAtPat)
+},false
+         
+)
+$:n("[0 [4|[2?0.3 6]] 3 [[0@2 4 1]|[4?0.4 5?0.2 3 2]]]/4")
+  .superimpose(x=>x.add(6))
+  .sound("saw")
+  .scale("E1:minor")
+  .noise(0.03)
+  .adsr(0.1,0.2,0.1,0.15)
+  .gain(0.5)
+  .lpf(400)
+  .lastOf(8,x=>x.rev())
+
+$:s("amen").break("{0@3 20@4 13!3 10@2 28@2 7@2}%8".div(32),4).gain(slider(0.564))
+// @version 1.1

@@ -1,0 +1,7 @@
+//@title Drop D @by Doctor Funk
+stack(
+//Bassline
+note("[[- [d, g]@2 -] [-@2 - [- [a#, d#]]] [[d, f#]@2 -] -]*2 [[[[d, g]*2 -] -] - [[[d, f#]*2 -] -] -]*4"),
+//Click
+sound("[[hh, bd] hh [sd, hh] hh]*16 [bd rd sd rd]*16").gain(0.3)
+).slow(64)

@@ -1,0 +1,21 @@
+// licensed with CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
+// by Alejandro Sánchez Medina
+
+register ('scrubEven', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
+setcps(135/512)
+
+await samples('github:switchangel/breaks/')
+
+stack(
+  note("[[7@4 -@4 4@4 -@2 5@4 -@2 5@3 - 4@2 3@2 2@3 -]  [[0@2 - 0@2 - 0@2] [- 0@2 - 0@2 -@2]]]/2")
+  .trans(-12)
+  .sound("saw")
+  .lpf(900)
+  .distort("0.5")
+  .gain(slider(0.357))
+  .scale("G:Minor"),
+  s("breaks:3").fit()
+  .scrubEven(8).rib("4",2).rib("10",1)
+  .gain(slider(0.375)),
+  //sound("hh*4")
+)

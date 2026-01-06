@@ -1,0 +1,13 @@
+// licensed with CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
+// by Alejandro Sánchez Medina
+//@title AmenBreak1
+register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
+setcps(150/2048)
+
+await samples('github:yaxu/clean-breaks/main/')
+
+stack(
+//  s("amen*2").fit().scrubResolution(16).rib("1",0.5),
+  s("amen*2").fit().scrub("0.5625 0.125 [0.375 0.46875] 0.4375 0.4375 0.75 0.75 0.875 0.3125 0.8125 0.5625 0.4375 [0.484375 0.375] 0.1875 0.0625 [0.84375 0.15625]"),
+  //sound("hh:2*4")
+)
