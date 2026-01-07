@@ -2,7 +2,7 @@
 setCps(110/60/8)
 
 const scaleMajor ="<c1:mixolydian@2 f1:major c1:mixolydian [g1:minor f1:major] c1:mixolydian>"
-const scaleDim = "<c0:diminished@2 eb0:diminished c0:diminished [gb0:diminished eb0:diminished] c0:diminished>"
+const scaleDim = "<c1:diminished@2 eb1:diminished c1:diminished [gb1:diminished eb1:diminished] c1:diminished>"
 
 let _pat = scaleMajor;
 //TODO implement 3 turnaround ending:
@@ -34,9 +34,9 @@ $: n(bassline).bassEffects()
 .when("<0@4 1 0>",x=>basslineTurn
   .bassEffects()
   .scale(pat)
-    )
+    )//.gain(0)
 
-/*$: s("[- oh:2]*2 -")
-$: s("cowbell").struct("[- x -@2 x -@2 x]*4").gain(2)
-$: s("bd:3*8").sometimesBy(0.025,x=>x.struct("[x -@2 x -@2 x -]*4")).gain(0.3)
-*/
+$: s("[- oh:2]*4")
+//#/$: s("cowbell").struct("[- x -@2 x -@2 x]*4").gain(2)
+//$: s("bd:3*8").sometimesBy(0.025,x=>x.struct("[x -@2 x -@2 x -]*4")).gain(0.3)
+
