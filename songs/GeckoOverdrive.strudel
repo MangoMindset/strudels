@@ -7,15 +7,17 @@ setcps(135/512)
 await samples('github:switchangel/breaks/')
 
 stack(
+  //chord("<G@2 G7@2 G9@2>").voicing().sound("gm_pad_halo").gain(slider(0.201)),//.gain(0),
   note("[[7@4 -@4 4@4 -@2 5@4 -@2 5@3 - 4@2 3@2 2@3 -]  [[0@2 - 0@2 - 0@2] [- 0@2 - 0@2 -@2]]]/2")
   .trans(-12)
-  .sound("saw")
-  .lpf(900)
-  .distort("0.5")
-  .gain(slider(0.357))
+  .sound("square")
+  .superimpose((x)=> x.detune("0.5"))
+  .lpf(180) 
+  .distort("0.7")
+  .gain(slider(0.542))
   .scale("G:Minor"),
   s("breaks:3").fit()
-  .scrubEven(8).rib("4",2).rib("10",1)
+  .scrubEven(8).rib("23",4)
   .gain(slider(0.375)),
   //sound("hh*4")
 )
