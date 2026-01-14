@@ -1,0 +1,9 @@
+//get gain from pattern
+//@version 0.1
+let gainVar = 0.5
+const bassline = "0@2 - 0@2 - 0@4 3@2 3@2 2@2 0@2 -@2 4@8 -3@2 -@2"
+  .gain(0.3)
+//TODO:figure out correct order
+const events = n(bassline).queryArc(0, 1)
+console.log(events[0]['value']['gain'])
+console.log(gainVar)
