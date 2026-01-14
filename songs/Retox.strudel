@@ -1,10 +1,30 @@
 // licensed with CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
 // by Alejandro Sánchez Medina
-//@title Retox
+//@version 0.001
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
+let _melody_gain = 0
+function toggle_mute(pat) {
+  const events = n(pat).queryArc(0, 1)
+  if (_melody_gain == 0) {
+    _melody_gain = events[0]['value']['gain']
+    pat.gain(0)
+  } else {
+    pat.gain(_melody_gain)
+    _melody_gain = 0
+  }
+}
+
+document.onkeydown = (e) => {
+  if (e.ctrlKey && e.keyCode == 60) { //<
+    toggle_mute(melody)
+  }
+}
+
+let melody_gain = ref(() => _melody_gain)
+
 setcps(150/2048)
 
 const retox_trunk = seq(
@@ -36,8 +56,7 @@ const drums_volta_2 = seq(
 
 await samples('github:yaxu/clean-breaks/main/')
 
-stack(
-  seq(retox_trunk,
+let melody = seq(retox_trunk,
       cat(
         retox_volta_1,
         retox_volta_1,
@@ -47,18 +66,20 @@ stack(
   .sound("gm_music_box")
   .compressor("-15:20:10:0.1:.02")
   .scale("C2:Minor")
-  .gain(slider(0)),
+  .gain(slider(0.178))
+
+stack(melody.gain(melody_gain),
   float_test
   .compressor("-15:20:10:0.1:.02")
   .acidenv("<0.2 0.4 0.25 0.35>")
   .sound("saw")
   .scale("C1:Minor")
-  .gain(slider(0.655)),
+  .gain(slider(1)),
   s("amen2*2").fit()
   //.scrubResolution(16)
   .scrub(rand_scrub)
   //.scrub(drums_volta_2)
-  .gain(slider(0.496))
+  .gain(slider(0))
   .lastOf(4, x=>x
     //.someCycles(x=>x
       .bpf(1200)
