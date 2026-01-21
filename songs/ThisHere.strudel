@@ -1,11 +1,12 @@
-//@title This Here
-setcpm(115)
+setcpm(130)
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
-const form = "<F:mixolydian@8 Bb:mixolydian@4 F:mixolydian@4 Bb:mixolydian@2 A:phrygian:dominant@2 Ab:mixolydian@2 G:mixolydian@2 Ab:mixolydian@4 F:mixolydian@4>/3"
+const form = `<F:mixolydian@8 Bb:mixolydian@4 F:mixolydian@4
+  Bb:mixolydian@2 A:phrygian:dominant@2 Ab:mixolydian@2
+  G:mixolydian@2 Ab:mixolydian@4 F:mixolydian@4>/3`
 // main melody loop
-$: n("<0 4 9 0 7>*3").scale(form).trans(-12).gain(slider(0.155))
+$: n("<0 4 9 0 7>*3").scale(form).trans(-12).gain(slider(0.052))
 
 // change melody to sawtooth, add slider
 .octave(-1).s("sawtooth").acidenv(slider(0.655))
@@ -22,6 +23,9 @@ $: n("<[[[0 - [-|-|2|1]]*4]@4 [0 - -] [0 - -1]]*8@8 [0 -@2]*48@8 >/6").scale(for
 // visual the melody with pianoroll
 ._pianoroll()
 
-// kickdrum, 3 on the floor
-$: s("<bd [bd, sd] bd>").duck("3:4:5:6").duckdepth(.8).duckattack(.16).gain(slider(0.269))._scope()
+// kickdrum,
+$: s("<bd [bd, sd] ->")
+  .firstOf(4, x=>s("<[bd, cr] [bd, sd] ->"))
+  .duck("3:4:5:6").duckdepth(.8).duckattack(.16)
+  .gain(slider(0.269))._scope()
 $: s("[hh [- - hh?0.4] hh?0.4]/3")
