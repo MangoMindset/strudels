@@ -1,25 +1,24 @@
-// licensed with CC BY-NC-SA 4.0 https://creativecommons.org/licenses/by-nc-sa/4.0/
-// by Alejandro Sánchez Medina
-//@version 0.001
+// @title Retox
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
-let _melody_gain = 0
-function toggle_mute(pat) {
-  const events = n(pat).queryArc(0, 1)
-  if (_melody_gain == 0) {
-    _melody_gain = events[0]['value']['gain']
-    pat.gain(0)
-  } else {
-    pat.gain(_melody_gain)
-    _melody_gain = 0
-  }
-}
+let default_gain_melody = slider(0.655)
+let _melody_gain = default_gain_melody
 
 document.onkeydown = (e) => {
-  if (e.ctrlKey && e.keyCode == 60) { //<
-    toggle_mute(melody)
+  console.log(e.keyCode) // print keycodes to web dev console
+  if (e.ctrlKey) {
+     if (e.keyCode === 88 || e.keyCode === 67 || e.keyCode === 86) {
+      // These are clipboard operations - let them through
+      return; // Exit early without preventing default
+    }
+    e.preventDefault()  // stops inserting text by mistake
+    switch(e.keyCode) { // using a switch to handle multiple key presses
+      case 60: // < key 
+        _melody_gain = _melody_gain ? 0 : default_gain_melody;
+      break 
+    }
   }
 }
 
@@ -66,25 +65,23 @@ let melody = seq(retox_trunk,
   .sound("gm_music_box")
   .compressor("-15:20:10:0.1:.02")
   .scale("C2:Minor")
-  .gain(slider(0.178))
 
 stack(melody.gain(melody_gain),
   float_test
   .compressor("-15:20:10:0.1:.02")
   .acidenv("<0.2 0.4 0.25 0.35>")
   .sound("saw")
-  .scale("C1:Minor")
-  .gain(slider(1)),
+  .scale("C1:Minor"),
   s("amen2*2").fit()
   //.scrubResolution(16)
   .scrub(rand_scrub)
   //.scrub(drums_volta_2)
-  .gain(slider(0))
+  .gain(slider(0.178))
   .lastOf(4, x=>x
     //.someCycles(x=>x
       .bpf(1200)
       .bpq("3 2 1 [0.5 0.25]")
          //)
 ),
- //sound("white*8").decay(0.15).gain(0.3)
+ sound("white*16").decay(0.15).gain(0.3)
 )
