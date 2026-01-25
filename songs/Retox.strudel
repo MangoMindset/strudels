@@ -4,7 +4,11 @@ register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
 let default_gain_melody = slider(0.655)
-let _melody_gain = default_gain_melody
+let default_gain_drums = slider(0.515)
+let default_gain_click = slider(0.402)
+let _gain_melody = default_gain_melody
+let _gain_drums = default_gain_drums
+let _gain_click = 0
 
 document.onkeydown = (e) => {
   console.log(e.keyCode) // print keycodes to web dev console
@@ -16,13 +20,18 @@ document.onkeydown = (e) => {
     e.preventDefault()  // stops inserting text by mistake
     switch(e.keyCode) { // using a switch to handle multiple key presses
       case 60: // < key 
-        _melody_gain = _melody_gain ? 0 : default_gain_melody;
-      break 
+        _gain_melody = _gain_melody ? 0 : default_gain_melody;
+      break
+      case 89: // y key
+        _gain_click = _gain_drums ? default_gain_click : 0;
+        _gain_drums = _gain_drums ? 0 : default_gain_drums;  
     }
   }
 }
 
-let melody_gain = ref(() => _melody_gain)
+let gain_melody = ref(() => _gain_melody)
+let gain_drums = ref(() => _gain_drums)
+let gain_click = ref(() => _gain_click)
 
 setcps(150/2048)
 
@@ -66,7 +75,7 @@ let melody = seq(retox_trunk,
   .compressor("-15:20:10:0.1:.02")
   .scale("C2:Minor")
 
-stack(melody.gain(melody_gain),
+stack(melody.gain(gain_melody),
   float_test
   .compressor("-15:20:10:0.1:.02")
   .acidenv("<0.2 0.4 0.25 0.35>")
@@ -76,12 +85,12 @@ stack(melody.gain(melody_gain),
   //.scrubResolution(16)
   .scrub(rand_scrub)
   //.scrub(drums_volta_2)
-  .gain(slider(0.178))
+  .gain(gain_drums)
   .lastOf(4, x=>x
     //.someCycles(x=>x
       .bpf(1200)
       .bpq("3 2 1 [0.5 0.25]")
          //)
 ),
- sound("white*16").decay(0.15).gain(0.3)
+ sound("white*16").decay(0.1).gain(gain_click)
 )
