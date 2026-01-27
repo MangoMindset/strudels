@@ -1,24 +1,28 @@
 //@title The Moon and the Prince @by MangoMindset
 setCps(110/60/8)
 
-const scaleMajor ="<c1:mixolydian@2 f1:major c1:mixolydian [g1:minor f1:major] c1:mixolydian>"
-const scaleDim = "<c1:diminished@2 eb1:diminished c1:diminished [gb1:diminished eb1:diminished] c1:diminished>"
+const scaleMajor ="<c2:mixolydian@2 f2:major c2:mixolydian [g2:minor f2:major] c2:mixolydian>"
+const scaleDim = "<c2:diminished@2 eb2:diminished c2:diminished [gb2:diminished eb2:diminished] c2:diminished>"
+const scales = [scaleMajor, scaleDim]
 
-let _pat = scaleMajor;
+let _scaleIdx = 0
 //TODO implement 3 turnaround ending:
 //use ribbon und apply .when("<0@4 1 0>") constantly
 document.onkeydown = (e) => {
-  if (e.ctrlKey && e.keyCode == 222) { //ä
-    _pat = scaleMajor;
-  }
-  if (e.ctrlKey && e.keyCode == 163) { //#
-    _pat = scaleDim;
+  //console.log(e.keyCode) // print keycodes to web dev console
+  if (e.ctrlKey) {
+    switch(e.keyCode) { // using a switch to handle multiple key presses
+      case 222:  // ä 
+        _scaleIdx = (_scaleIdx + 1) % scales.length // cycle through scales 
+        break
+    }
   }
 }
-let pat = ref(() => _pat)
+
+let myScale = ref(() => scales[_scaleIdx])
 
 register('bassEffects',p=>p
-  .scale(pat)
+  .scale(myScale)
   .room(1)
   .distort(0.5)
   .sound("gm_acoustic_bass")
@@ -33,10 +37,9 @@ const basslineTurn = "[0@2 - 0@2 - 0@4 3@2 3@2 2@2]*2"
 $: n(bassline).bassEffects()
 .when("<0@4 1 0>",x=>basslineTurn
   .bassEffects()
-  .scale(pat)
+  .scale(myScale)
     )//.gain(0)
 
 $: s("[- oh:2]*4")
 //#/$: s("cowbell").struct("[- x -@2 x -@2 x]*4").gain(2)
 //$: s("bd:3*8").sometimesBy(0.025,x=>x.struct("[x -@2 x -@2 x -]*4")).gain(0.3)
-
