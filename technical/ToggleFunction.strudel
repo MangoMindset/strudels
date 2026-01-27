@@ -1,0 +1,61 @@
+//@title technical/toggleFunction @by MangoMindset
+
+let patterns = ["bd", "sd", "hh"];
+let keyCode = 222;
+
+function createToggleFunction(choices, keyCode) {
+  let _choiceIdx = 0;
+  
+  // Return a function that sets up the event handler
+  return function setupToggle() {
+    // Save the current onkeydown handler if it exists
+    const existingHandler = document.onkeydown;
+    
+    document.onkeydown = (e) => {
+      // First call the existing handler if it exists
+      if (existingHandler) {
+        existingHandler(e);
+      }
+      
+      // Check if our key combination is pressed
+      if (e.ctrlKey && e.keyCode === keyCode) {
+        e.preventDefault(); // Prevent default behavior if needed
+        _choiceIdx = (_choiceIdx + 1) % choices.length; // Cycle through choices
+        //console.log('Current choice: ${choices[_choiceIdx]}'); gives out the literal string in strudel
+        
+        // You could trigger a custom event here to notify other parts of your app
+        const event = new CustomEvent('choiceChanged', {
+          detail: { 
+            currentIndex: _choiceIdx,
+            currentChoice: choices[_choiceIdx],
+            allChoices: choices
+          }
+        });
+        document.dispatchEvent(event);
+      }
+    };
+    
+    // Return a getter function to access the current choice
+    return {
+      getCurrentChoice: () => choices[_choiceIdx],
+      getCurrentIndex: () => _choiceIdx,
+      setChoiceIndex: (index) => {
+        if (index >= 0 && index < choices.length) {
+          _choiceIdx = index;
+          return true;
+        }
+        return false;
+      }
+    };
+  };
+}
+
+// const toggleSetup = createToggleFunction(pattern, 222);
+// const choiceManager = toggleSetup();
+// let pattern = ref(() => choiceManager.getCurrentChoice())
+
+const toggleManager = createToggleFunction(patterns, 222)();
+let pattern = ref(() => toggleManager.getCurrentChoice())
+
+
+$: s(pattern)
