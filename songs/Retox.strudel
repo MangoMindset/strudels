@@ -1,23 +1,20 @@
 // @title Retox
 //await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl.strudel')).text()); })();
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl.strudel')).text()); })();
+
 
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
 
-const toggleMelody = createMuteFunction(slider(0.239), 222)(); // ä
-let gain_melody = ref(() => toggleMelody.getCurrentChoice())
-
-const toggleBass = createMuteFunction(slider(0.83), 219)(); // ü
-let gain_bass = ref(() => toggleBass.getCurrentChoice())
+const toggleMelody = createMute(slider(0.239), 222)(); // ä
+const toggleBass = createMute(slider(0.83), 59)(); // ü
 
 //this should become a createAlternateFunction with two gains creating two arrays
-const toggleDrums = createMuteFunction(slider(0.311), 59)(); // ö
-let gain_drums = ref(() => toggleDrums.getCurrentChoice())
-const toggleClick = createToggleFunction([0,slider(0.288)], 59)(); // ö
-let gain_click = ref(() => toggleClick.getCurrentChoice())
+const toggleDrums = createMute(slider(0.311), 192)(); // ö
+const toggleClick = createToggle
+  ([0,slider(0.288)], 192)(); // ö
 
 setcps(150/2048)
 
@@ -59,23 +56,23 @@ let melody = seq(retox_trunk,
   .compressor("-15:20:10:0.1:.02")
   .scale("C2:Minor")
 
-stack(melody.gain(gain_melody),
+stack(melody.gain(toggleMelody),
   bass
   .compressor("-15:20:10:0.1:.02")
   .acidenv("<0.2 0.4 0.5 0.35>")
   .sound("saw")
   .scale("C1:Minor")
-  .gain(gain_bass),
+  .gain(toggleBass),
   s("amen2*2").fit()
   //.scrubResolution(16)
   .scrub(rand_scrub)
   //.scrub(drums_volta_2)
-  .gain(gain_drums)
+  .gain(toggleDrums)
   .lastOf(4, x=>x
     //.someCycles(x=>x
       .bpf(1200)
       .bpq("3 2 1 [0.5 0.25]")
          //)
 ),
- sound("white*16").decay(0.075).gain(gain_click)
+ sound("white*16").decay(0.075).gain(toggleClick)
 )
