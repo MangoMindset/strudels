@@ -3,16 +3,27 @@ const subbassline = "0 [- 4] [- 4] [- 4]?0.75"
 const bassline = "[0 -] 0*2 [- 0]?0.6 [0 -] [- 0] - 0 -"
 
 const scaleA ="<c2:major@2 c2:minor@2 d2:mixolydian [d2:mixolydian db2:major] c2:major@2>"
+const scaleB ="<c2:major@4 eb2:major@4>"
 
-$: n(subbassline)
+let subbass = n(subbassline)
   .scale("c2:mixolydian")
   .diode(0.8)
   .trans(-12)
 
-$: n(bassline).sound("gm_agogo, gm_music_box").gain(0.1).scale(scaleA)
+let bass = n(bassline).sound("gm_agogo, gm_music_box")
+  .gain(0.4)
+  //.detune("0.3 14")
+  .scale(scaleA)
 .lastOf(4, x => x.hpf("1500"))
 
-$: s("- hh:3*2 - hh")
-$: s("bd:2*2")
 //#/$: s("cowbell").struct("[- x -@2 x -@2 x]*4").gain(2)
 //$: s("bd:3*8").sometimesBy(0.025,x=>x.struct("[x -@2 x -@2 x -]*4")).gain(0.3)
+
+let stackA = stack(
+  subbass,
+  bass,
+  //s("- hh:3*2 - hh"),
+  //s("bd:2*2")
+)
+
+stackA
