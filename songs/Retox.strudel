@@ -1,21 +1,21 @@
-// @title Retox @by Nerve
+// @title Retox
 await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl.strudel')).text()); })();
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
-let default_gain_melody = slider(0.614)
-let default_gain_drums = slider(0.515)
-let default_gain_click = slider(0.333)
 
 //createMuteFunction in KeyControls.strudel can not be called for some reason
-const toggleMelodyGainManager = createToggleFunction([default_gain_melody,0], 222)(); // ä
+const toggleMelodyGainManager = createToggleFunction([slider(0.239),0], 222)(); // ä
 let gain_melody = ref(() => toggleMelodyGainManager.getCurrentChoice())
 
+const toggleBassGainManager = createToggleFunction([slider(0.83),0], 219)(); // ü
+let gain_bass = ref(() => toggleBassGainManager.getCurrentChoice())
+
 //this should become a createAlternateFunction with two gains creating two arrays
-const toggleDrumsGainManager = createToggleFunction([default_gain_drums,0], 59)(); // ö
+const toggleDrumsGainManager = createToggleFunction([slider(0.311),0], 59)(); // ö
 let gain_drums = ref(() => toggleDrumsGainManager.getCurrentChoice())
-const toggleClickGainManager = createToggleFunction([0,default_gain_click], 59)(); // ö
+const toggleClickGainManager = createToggleFunction([0,slider(0.288)], 59)(); // ö
 let gain_click = ref(() => toggleClickGainManager.getCurrentChoice())
 
 setcps(150/2048)
@@ -32,9 +32,7 @@ const retox_volta_2 = seq(
    "[[- 7@2 -] [6 7@2 -]]",
    "[9 - 10 11 10@2 9 7]"
   )
-           
-
-const float_test = "7 3 7 [5 6]"
+const bass = "7 3 7 [5 6]"
 
 const rand_scrub = seq(
   "0.75 0.125 [0.375 0.46875] 0.4375",
@@ -61,11 +59,12 @@ let melody = seq(retox_trunk,
   .scale("C2:Minor")
 
 stack(melody.gain(gain_melody),
-  float_test
+  bass
   .compressor("-15:20:10:0.1:.02")
-  .acidenv("<0.2 0.4 0.25 0.35>")
+  .acidenv("<0.2 0.4 0.5 0.35>")
   .sound("saw")
-  .scale("C1:Minor"),
+  .scale("C1:Minor")
+  .gain(gain_bass),
   s("amen2*2").fit()
   //.scrubResolution(16)
   .scrub(rand_scrub)
