@@ -8,13 +8,13 @@ register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
 
-const toggleMelody = createMute(slider(0.239), 222)(); // ä
+const toggleMelody = createMute(slider(0.32), 222)(); // ä
 const toggleBass = createMute(slider(0.83), 59)(); // ü
 
 //this should become a createAlternateFunction with two gains creating two arrays
 const toggleDrums = createMute(slider(0.311), 192)(); // ö
 const toggleClick = createToggle
-  ([0,slider(0.288)], 192)(); // ö
+  ([0,slider(0.57)], 192)(); // ö
 
 setcps(150/2048)
 
@@ -42,6 +42,9 @@ const rand_scrub = seq(
 const drums_volta_2 = seq(
   "[0.4375 0.9375@3] [- 0.9375@3] 0.3125 0.875"
 ).fast(4)
+
+const clickA = sound("white*16").decay(0.075)
+const clickFill = sound("[- hh [white? white] hh]*8").decay(0.075).gain(toggleClick)
 
 //await samples('github:yaxu/clean-breaks/main/')
 
@@ -74,5 +77,7 @@ stack(melody.gain(toggleMelody),
       .bpq("3 2 1 [0.5 0.25]")
          //)
 ),
- sound("white*16").decay(0.075).gain(toggleClick)
+sound("white*16").decay(0.075)
+ .lastOf(4, x=>clickFill)
+ .gain(toggleClick)
 )
