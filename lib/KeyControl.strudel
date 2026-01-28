@@ -1,6 +1,6 @@
 //@title lib/KeyControl @by MangoMindset
 
-function createToggleFunction(choices, keyCode) {
+function createToggle(choices, keyCode) {
   let _choiceIdx = 0;
   
   // Return a function that sets up the event handler
@@ -33,24 +33,14 @@ function createToggleFunction(choices, keyCode) {
     };
     
     // Return a getter function to access the current choice
-    return {
-      getCurrentChoice: () => choices[_choiceIdx],
-      getCurrentIndex: () => _choiceIdx,
-      setChoiceIndex: (index) => {
-        if (index >= 0 && index < choices.length) {
-          _choiceIdx = index;
-          return true;
-        }
-        return false;
-      }
-    };
+    return ref(() => choices[_choiceIdx]);
   };
 }
 
-function createMuteFunction(gain, keyCode){
+function createMute(gain, keyCode){
   // Return a function that when called, sets up the toggle and returns the choice manager
   return function setupMute() {
-    const toggleSetup = createToggleFunction([gain, 0], keyCode);
+    const toggleSetup = createToggle([gain, 0], keyCode);
     return toggleSetup(); // Call setupToggle to actually initialize it
   };
 }
