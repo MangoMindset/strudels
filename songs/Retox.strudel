@@ -1,37 +1,22 @@
-// @title Retox
+// @title Retox @by Nerve
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl.strudel')).text()); })();
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
-let default_gain_melody = slider(0.655)
+let default_gain_melody = slider(0.614)
 let default_gain_drums = slider(0.515)
-let default_gain_click = slider(0.402)
-let _gain_melody = default_gain_melody
-let _gain_drums = default_gain_drums
-let _gain_click = 0
+let default_gain_click = slider(0.333)
 
-document.onkeydown = (e) => {
-  console.log(e.keyCode) // print keycodes to web dev console
-  if (e.ctrlKey) {
-     if (e.keyCode === 88 || e.keyCode === 67 || e.keyCode === 86) {
-      // These are clipboard operations - let them through
-      return; // Exit early without preventing default
-    }
-    e.preventDefault()  // stops inserting text by mistake
-    switch(e.keyCode) { // using a switch to handle multiple key presses
-      case 60: // < key 
-        _gain_melody = _gain_melody ? 0 : default_gain_melody;
-      break
-      case 89: // y key
-        _gain_click = _gain_drums ? default_gain_click : 0;
-        _gain_drums = _gain_drums ? 0 : default_gain_drums;  
-    }
-  }
-}
+//createMuteFunction in KeyControls.strudel can not be called for some reason
+const toggleMelodyGainManager = createToggleFunction([default_gain_melody,0], 222)(); // ä
+let gain_melody = ref(() => toggleMelodyGainManager.getCurrentChoice())
 
-let gain_melody = ref(() => _gain_melody)
-let gain_drums = ref(() => _gain_drums)
-let gain_click = ref(() => _gain_click)
+//this should become a createAlternateFunction with two gains creating two arrays
+const toggleDrumsGainManager = createToggleFunction([default_gain_drums,0], 59)(); // ö
+let gain_drums = ref(() => toggleDrumsGainManager.getCurrentChoice())
+const toggleClickGainManager = createToggleFunction([0,default_gain_click], 59)(); // ö
+let gain_click = ref(() => toggleClickGainManager.getCurrentChoice())
 
 setcps(150/2048)
 
@@ -62,7 +47,7 @@ const drums_volta_2 = seq(
   "[0.4375 0.9375@3] [- 0.9375@3] 0.3125 0.875"
 ).fast(4)
 
-await samples('github:yaxu/clean-breaks/main/')
+//await samples('github:yaxu/clean-breaks/main/')
 
 let melody = seq(retox_trunk,
       cat(
