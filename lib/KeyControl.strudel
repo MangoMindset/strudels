@@ -46,3 +46,11 @@ function createToggleFunction(choices, keyCode) {
     };
   };
 }
+
+function createMuteFunction(gain, keyCode){
+  // Return a function that when called, sets up the toggle and returns the choice manager
+  return function setupMute() {
+    const toggleSetup = createToggleFunction([gain, 0], keyCode);
+    return toggleSetup(); // Call setupToggle to actually initialize it
+  };
+}
