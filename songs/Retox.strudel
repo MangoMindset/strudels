@@ -1,5 +1,4 @@
 // @title Retox
-//await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl.strudel')).text()); })();
 await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl.strudel')).text()); })();
 
 
@@ -9,12 +8,11 @@ register('acidenv', (x, pat) => pat.lpf(100)
 )
 
 const toggleMelody = createMute(slider(0.32), 222)(); // ä
-const toggleBass = createMute(slider(0.83), 59)(); // ü
+const toggleBass = createMute(slider(0.83), 219)(); // ü
 
 //this should become a createAlternateFunction with two gains creating two arrays
-const toggleDrums = createMute(slider(0.311), 192)(); // ö
-const toggleClick = createToggle
-  ([0,slider(0.57)], 192)(); // ö
+const toggleDrums = createMute(slider(0.311), 59)(); // ö
+const toggleClick = createToggle([0,slider(0.57)], 59)(); // ö
 
 setcps(150/2048)
 
