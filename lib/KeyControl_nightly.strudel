@@ -1,60 +1,26 @@
-//@title lib/KeyControl @by MangoMindset
-
-function createToggleFunction(choices, keyCode) {
-  let _choiceIdx = 0;
+// In your KeyControl.strudel file, change createToggle to:
+function createToggle(values, keyCode, mod = "Control") {
+  let index = 0;
   
-  // Helper to get value, handling both primitives and reactive objects
-  const getValue = (val) => {
-    if (val && typeof val === 'object') {
-      // Try common reactive property names
-      if ('value' in val) return val.value;
-      if ('getValue' in val && typeof val.getValue === 'function') return val.getValue();
-      if ('val' in val) return val.val;
+  // Define the event listener function
+  const toggleFunction = () => {
+    const value = values[index];
+    index = (index + 1) % values.length;
+    return value;
+  };
+  
+  // Add keyboard event listener
+  window.addEventListener('keydown', (e) => {
+    if (e.keyCode === keyCode && 
+        (mod === "Control" ? e.ctrlKey : 
+         mod === "Shift" ? e.shiftKey : 
+         mod === "Alt" ? e.altKey : true)) {
+      // Trigger the toggle
+      toggleFunction();
+      // Prevent default to avoid browser shortcuts
+      e.preventDefault();
     }
-    return val;
-  };
+  });
   
-  return function setupToggle() {
-    const existingHandler = document.onkeydown;
-    
-    document.onkeydown = (e) => {
-      if (existingHandler) existingHandler(e);
-      
-      if (e.ctrlKey && e.keyCode === keyCode) {
-        e.preventDefault();
-        _choiceIdx = (_choiceIdx + 1) % choices.length;
-        
-        const currentChoice = getValue(choices[_choiceIdx]);
-        const event = new CustomEvent('choiceChanged', {
-          detail: { 
-            currentIndex: _choiceIdx,
-            currentChoice: currentChoice
-          }
-        });
-        document.dispatchEvent(event);
-      }
-    };
-    
-    return {
-      // Property that always returns the current value
-      get currentChoice() {
-        return getValue(choices[_choiceIdx]);
-      },
-      
-      // Method version
-      getCurrentChoice: () => getValue(choices[_choiceIdx]),
-      
-      get currentIndex() {
-        return _choiceIdx;
-      },
-      
-      setChoiceIndex: (index) => {
-        if (index >= 0 && index < choices.length) {
-          _choiceIdx = index;
-          return true;
-        }
-        return false;
-      }
-    };
-  };
-}
+  // Return the current value directly
+  return ref(() => values[index]);
