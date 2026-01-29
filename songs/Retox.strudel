@@ -1,5 +1,5 @@
 // @title Retox
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl_v01.strudel')).text()); })();
 
 
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
@@ -7,12 +7,12 @@ register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
 
-const toggleMelody = createMute(slider(0.32), 222)(); // ä
-const toggleBass = createMute(slider(0.83), 219)(); // ü
+const toggleMelody = mute(slider(0.32), 222); // ä
+const toggleBass = mute(slider(0.784), 219); // ü
 
 //this should become a createAlternateFunction with two gains creating two arrays
-const toggleDrums = createMute(slider(0.311), 59)(); // ö
-const toggleClick = createToggle([0,slider(0.57)], 59)(); // ö
+const toggleDrums = mute(slider(0.447), 59); // ö
+const toggleClick = toggle([0,slider(0.57)], 59); // ö
 
 setcps(150/2048)
 
@@ -42,7 +42,7 @@ const drums_volta_2 = seq(
 ).fast(4)
 
 const clickA = sound("white*16").decay(0.075)
-const clickFill = sound("[- hh [white? white] hh]*8").decay(0.075).gain(toggleClick)
+const clickFill = sound("[[white -@4] cp]*8").gain(toggleClick)
 
 //await samples('github:yaxu/clean-breaks/main/')
 
