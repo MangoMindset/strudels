@@ -1,0 +1,27 @@
+function toggle(values, keyCode) {
+  let index = 0;
+  
+  // Define the event listener function
+  const toggleFunction = () => {
+    const value = values[index];
+    index = (index + 1) % values.length;
+    return value;
+  };
+  
+  // Add keyboard event listener
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.keyCode === keyCode) {
+      // Trigger the toggle
+      toggleFunction();
+      // Prevent default to avoid browser shortcuts
+      e.preventDefault();
+    }
+  });
+  
+  // Return the current value directly
+  return ref(() => values[index]);
+}  
+  
+function mute(gain, keyCode) {
+    return toggle([gain, 0], keyCode)
+    }
