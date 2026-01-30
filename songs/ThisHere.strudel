@@ -1,31 +1,35 @@
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl_v01.strudel')).text()); })();
 setcpm(130)
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
 const form = `<F:mixolydian@8 Bb:mixolydian@4 F:mixolydian@4
   Bb:mixolydian@2 A:phrygian:dominant@2 Ab:mixolydian@2
-  G:mixolydian@2 Ab:mixolydian@4 F:mixolydian@4>/3`
+  G:mixolydian@2 Ab:mixolydian@4 F:mixolydian@2 F:mixolydian@2>/3`
+const bassgroove1 = "[0 - -1]"
+$: stack(
 // main melody loop
-$: n("<0 4 9 0 7>*3").scale(form).trans(-12).gain(slider(0.052))
+n("<0 4 9 0 [7|3]>*3").scale(form).trans(-12).gain(mute(slider(0.269),222))//ä
 
 // change melody to sawtooth, add slider
-.octave(-1).s("sawtooth").acidenv(slider(0.655))
+.octave(-1).s("sawtooth").acidenv(slider(0.436))
 
 // visual the melody with pianoroll
-._pianoroll()
+._pianoroll(),
 // Base Loop
-const bassgroove1 = "[0 - -1]"
-$: n("<[[[0 - [-|-|2|1]]*4]@4 [0 - -] [0 - -1]]*8@8 [0 -@2]*48@8 >/6").scale(form).trans(-24).gain(slider(1))
-
+n("<[[[0 - [-|-|2|1]?0.6]*4]@4 - [0 - -1]]*8@8 [0 -@2]*48@8 >/6")
+  .scale(form).
+  trans(-24)
+  .gain(mute(slider(1),219))//ü
 // change melody to sawtooth, add slider
 .octave(0).s("supersaw").acidenv(slider(0.364))
-
 // visual the melody with pianoroll
-._pianoroll()
+._pianoroll(),
 
 // kickdrum,
-$: s("<bd [bd, sd] ->")
-  .firstOf(4, x=>s("<[bd, cr] [bd, sd] ->"))
-  .duck("3:4:5:6").duckdepth(.8).duckattack(.16)
-  .gain(slider(0.269))._scope()
-$: s("[hh [- - hh?0.4] hh?0.4]/3")
+ s("<bd [bd, sd] ->")
+   .firstOf(4, x=>s("<[bd, cr] [bd, sd] ->"))
+   .gain(mute(slider(0.246),59))._scope(), //ö
+s("[rd [rd?0.35 - rd?0.4] rd?0.4]/3").bank("rm50").gain(mute(slider(0.333),59)) //ö
+).when(toggle(["0","1"],60),x=>x.rib(6,6)) //<
+$: n("0").scale(form).gain(0).color('red')
