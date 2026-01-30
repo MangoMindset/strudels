@@ -10,7 +10,7 @@ register('acidenv', (x, pat) => pat.lpf(100)
 const toggleMelody = mute(slider(0.32), 222); // ä
 const toggleBass = mute(slider(0.784), 59); // ü
 
-const alt_drums = alternate(slider(0.202),slider(0.432), 219) //ö
+const alt_drums = alternate(slider(0.202),slider(0.432), 192) //ö
 
 setcps(150/2048)
 

@@ -1,11 +1,12 @@
 //@title All of Me
-
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
+const alt_drums = alternate(slider(0.366),slider(0.432), 192) //ö
 stack(
 cat(
-  "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]",
+//  "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]",
   "C^7", "E7", "A7", "Dm7",
-  "E7", "Am7", "D7", "[Dm7 G7]",
-  "C^7", "E7", "A7", "Dm7"
+//  "E7", "Am7", "D7", "[Dm7 G7]",
+//  "C^7", "E7", "A7", "Dm7"
 ).chord().layer(
 //Bass
 x=>n("[0 [~ 1] 0 ~]").set(x).mode("root:g2").voicing().s('gm_acoustic_bass'),
@@ -14,9 +15,10 @@ x=>n("[0 [~ 1] 0 ~]").set(x).mode("root:g2").voicing().s('gm_acoustic_bass'),
 //Straight
 //x=>n("[0 ~ 0 ~]").set(x).mode("root:g2").voicing().s('gm_acoustic_bass'),
 ),
-//Metronome
-//sound("hh*8"),
 //Drums
-sound("[bd hh*2] [hh*2 bd] [bd hh*2] hh*4").bank("R8").gain(0.3)
+
+sound("[bd hh*2] [hh*2 bd] [bd hh*2] hh*4").bank("R8").gain(alt_drums.main),
 //sound("[bd hh*2] hh*3 [bd hh hh] hh*4").bank("R8").gain(0.3)
+//Metronome
+sound("hh*2").gain(alt_drums.alt)
 ).slow(1.2)
