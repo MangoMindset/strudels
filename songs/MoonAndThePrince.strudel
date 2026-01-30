@@ -22,11 +22,15 @@ register('bassEffects',p=>p
 const bassline = "0@2 - 0@2 - 0@4 3@2 3@2 2@2 0@2 -@2 4@8 -3@2 -@2"
 const basslineTurn = "[0@2 - 0@2 - 0@4 3@2 3@2 2@2]*2"
 
-$: n(bassline).bassEffects()
+const bassA = n(bassline).bassEffects()
 .when("<0@4 1 0>",x=>basslineTurn
   .bassEffects()
   .scale(toggleScale)
-    )//.gain(0)
+     )
+
+$: bassA
+//$: bassA.gain(0).color('red')
+
 
 $: s("[- oh:2]*4")
 //#/$: s("cowbell").struct("[- x -@2 x -@2 x]*4").gain(2)
