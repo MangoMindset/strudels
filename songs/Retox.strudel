@@ -1,5 +1,5 @@
 // @title Retox
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
 
 
 register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
@@ -8,9 +8,9 @@ register('acidenv', (x, pat) => pat.lpf(100)
 )
 
 const toggleMelody = mute(slider(0.32), 222); // ä
-const toggleBass = mute(slider(0.784), 219); // ü
+const toggleBass = mute(slider(0.784), 59); // ü
 
-const alt_drums = alternate(slider(0.553),slider(0.432), 59)
+const alt_drums = alternate(slider(0.202),slider(0.432), 219) //ö
 
 setcps(150/2048)
 
