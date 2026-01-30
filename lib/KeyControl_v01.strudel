@@ -30,3 +30,4 @@ function alternate(gainMain, gainAlt, keyCode) {
     const toggleMain = toggle([gainMain, 0], keyCode)
     const toggleAlt = toggle([0, gainAlt], keyCode)
     return {'main':toggleMain,'alt':toggleAlt}
+}
