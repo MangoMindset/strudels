@@ -10,9 +10,7 @@ register('acidenv', (x, pat) => pat.lpf(100)
 const toggleMelody = mute(slider(0.32), 222); // ä
 const toggleBass = mute(slider(0.784), 219); // ü
 
-//this should become a createAlternateFunction with two gains creating two arrays
-const toggleDrums = mute(slider(0.447), 59); // ö
-const toggleClick = toggle([0,slider(0.57)], 59); // ö
+const alt_drums = alternate(slider(0.553),slider(0.432), 59)
 
 setcps(150/2048)
 
@@ -41,8 +39,9 @@ const drums_volta_2 = seq(
   "[0.4375 0.9375@3] [- 0.9375@3] 0.3125 0.875"
 ).fast(4)
 
-const clickA = sound("white*16").decay(0.075)
-const clickFill = sound("[[white -@4] cp]*8").gain(toggleClick)
+const white_decay = 0.075
+const clickA = sound("white*16").decay(white_decay)
+const clickFill = sound("[white cp]*8").when("[1 0]*8", x =>x.decay(white_decay))
 
 //await samples('github:yaxu/clean-breaks/main/')
 
@@ -68,14 +67,14 @@ stack(melody.gain(toggleMelody),
   //.scrubResolution(16)
   .scrub(rand_scrub)
   //.scrub(drums_volta_2)
-  .gain(toggleDrums)
+  .gain(alt_drums.main)
   .lastOf(4, x=>x
     //.someCycles(x=>x
       .bpf(1200)
       .bpq("3 2 1 [0.5 0.25]")
          //)
 ),
-sound("white*16").decay(0.075)
+clickA
  .lastOf(4, x=>clickFill)
- .gain(toggleClick)
+ .gain(alt_drums.alt)
 )
