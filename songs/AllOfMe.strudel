@@ -1,19 +1,27 @@
 //@title All of Me
 await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
-const alt_drums = alternate(slider(0.366),slider(0.432), 192) //ö
+register('acidenv', (x, pat) => pat.lpf(100)
+  .lpenv(x * 9).lps(.2).lpd(.12).lpq(3)
+)
+setcpm(100/4)
+const basslines = [
+  "[0 [~ 1]?0.2 0 ~]",
+  "[[0 [~ 1] 0 ~] <[0 [~ 1] 0 ~] [0 1 [0|1] 2]>]/2",
+  "[0 ~ 0 ~]"]
+const alt_drums = alternate(slider(0.14),slider(0.432), 59) //ö
 stack(
 cat(
-//  "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]",
+  "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]",
   "C^7", "E7", "A7", "Dm7",
-//  "E7", "Am7", "D7", "[Dm7 G7]",
-//  "C^7", "E7", "A7", "Dm7"
+"E7", "Am7", "D7", "[Dm7 G7]",
+  "C^7", "E7", "A7", "Dm7"
 ).chord().layer(
 //Bass
-x=>n("[0 [~ 1] 0 ~]").set(x).mode("root:g2").voicing().s('gm_acoustic_bass'),
-//Fill every four bars
-//x=>n("[[0 [~ 1] 0 ~] <[0 [~ 1] 0 ~] [0 [1 2] 0 3]>]/2").set(x).mode("root:g2").voicing().s('gm_acoustic_bass'),
-//Straight
-//x=>n("[0 ~ 0 ~]").set(x).mode("root:g2").voicing().s('gm_acoustic_bass'),
+x=>n(toggle(basslines, 60)).set(x).mode("root:g2").voicing()
+  .s('gm_slap_bass_1')
+  .bpf(700).bpq(0.4)
+  .acidenv(slider(0.417))
+.gain(mute(slider(0.742),219)),
 ),
 //Drums
 
@@ -21,4 +29,4 @@ sound("[bd hh*2] [hh*2 bd] [bd hh*2] hh*4").bank("R8").gain(alt_drums.main),
 //sound("[bd hh*2] hh*3 [bd hh hh] hh*4").bank("R8").gain(0.3)
 //Metronome
 sound("hh*2").gain(alt_drums.alt)
-).slow(1.2)
+)
