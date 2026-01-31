@@ -1,13 +1,14 @@
 //@title Jerk It Out
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
 register('stChords',p=>p
   .sound("gm_electric_guitar_jazz")
   .sustain(10)
   .chord()
   .voicing()
-  .gain(slider(0.23))
+  .gain(slider(0.496))
 )
 register('stBass',p=>p
-  .gain(slider(0.157))
+  .gain(slider(0.337))
   .distort(1.5)
   .sound("gm_reed_organ")
   .scale("E0:major")
@@ -24,8 +25,8 @@ const chordsFill = "[G#m*2 B F#*2 E]*2"
 const chordsChorus1 = "E^7 G#m F# G#m"
 const chordsChorus2 = "E^7 G#m F#@2"
 
-const clickA = s("white*4").decay(0.1)
-const clickFill = s("[white*2 white]*2").decay(0.1)
+const clickA = s("white*4").decay(0.075)
+const clickFill = s("[white*2 white]*2").decay(0.075)
 const clickChorus = s("hh:2*4").distort(1)
 
 const stackA = stack(
@@ -42,8 +43,8 @@ const stackChorus2 = stack(
 )
 
 arrange(
-  [1,stackChorus2],
   [3,stackA],
   [0.5,stackFill],
   [1,stackChorus1],
-)
+  [1,stackChorus2],
+).when(toggle(["1","0"],60),x=>x.rib(0,1)) //<
