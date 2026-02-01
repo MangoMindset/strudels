@@ -227,11 +227,3 @@ function alternate(gainMain, gainAlt, keyInput) {
     const toggleAlt = toggle([0, gainAlt], keyInput)
     return {'main':toggleMain,'alt':toggleAlt}
 }
-
-// @title Retox
-//await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_nightly.strudel')).text()); })();
-
-
-register ('scrubResolution', (x, pat) => pat.scrub(irand(2*x).div(2*x).seg(x)))
-register('acidenv', (x, pat) => pat.lpf(100)
-        .lpenv(x * 9).lps(.2).lpd(.12)
