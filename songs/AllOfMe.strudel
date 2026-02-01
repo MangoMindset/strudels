@@ -1,5 +1,5 @@
 //@title All of Me
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_nightly0.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@latest/lib/KeyControl_v01.strudel')).text()); })();
 register('acidenv', (x, pat) => pat.lpf(100)
   .lpenv(x * 9).lps(.2).lpd(.12).lpq(3)
 )
@@ -14,15 +14,15 @@ const chords = cat(
   "C^7", "E7", "A7", "Dm7",
   "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]"
 )
-const alt_drums = alternate(slider(0.14),slider(0.432), 'ö')
+const alt_drums = alternate(slider(0.254),slider(0.432), 'ö')
 stack(
 chords.chord().layer(
 //Bass
-x=>n(toggle(basslines, 60)).set(x).mode("root:g2").voicing()
+x=>n(toggle(basslines, '<')).set(x).mode("root:g2").voicing()
   .s('gm_slap_bass_1')
   .bpf(700).bpq(0.4)
   .acidenv(slider(0.417))
-.gain(mute(slider(0.742),219)),
+.gain(mute(slider(0.742),'ü')),
 ),
 //Drums
 
