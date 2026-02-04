@@ -4,16 +4,16 @@ const bounce = [1, 0, 0.8, 0, 0.1, 0, 0.3]
 const mid = [1, 0, 0.8, 0, 0.1, 0, 0, 0.3]
 const low = [1,0.3,0]
 
-setcpm(95/4)
+setcpm(85/4)
 
 stack(
 note("[- 0] -@2 [- 0] - [- 0] - -7")
   .scale("eb2:major")
   .sound("square")
   .partials(toggle([mid,bounce,low],'y'))
-  .penv(20).panchor(0).pdec(0.05)
+  .penv(20).panchor(0).pdec(slider(0.06675,0,0.25))
   .when(toggle(["0","0","0 [0 1]"],'y'), x=>x.trans(24))
   ,
-s("hh:3*4").decay(0.075),
-s("- sd:6").gain(slider(0.094))
+s("hh:3*4").decay(0.075).gain(mute(slider(1),'#')),
+s("[- sd:6]*2").gain(slider(0.2025,0,0.5))
   ).swing(8)
