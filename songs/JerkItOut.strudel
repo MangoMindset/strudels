@@ -1,17 +1,20 @@
 //@title Jerk It Out
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
 register('stChords',p=>p
   .sound("gm_electric_guitar_jazz")
   .sustain(10)
   .chord()
   .voicing()
-  .gain(slider(0.496))
+  .gain(mute(slider(0.414),'ö'))
 )
 register('stBass',p=>p
-  .gain(slider(0.337))
+  .gain(mute(slider(0.395),'ä'))
   .distort(1.5)
   .sound("gm_reed_organ")
   .scale("E0:major")
+  )
+register('stClick',p=>p
+  .gain(mute(slider(0.268),'#'))
   )
 setCps(120/60/16)
 
@@ -30,21 +33,27 @@ const clickFill = s("[white*2 white]*2").decay(0.075)
 const clickChorus = s("hh:2*4").distort(1)
 
 const stackA = stack(
-  riffA.stBass(),chordsA.stChords(),clickA
+  riffA.stBass(),chordsA.stChords(),clickA.stClick()
 )
 const stackFill = stack(
-  riffFill.stBass(),chordsFill.stChords(),clickFill
+  riffFill.stBass(),chordsFill.stChords(),clickFill.stClick()
 )
 const stackChorus1 = stack(
-  riffChorus1.stBass(),chordsChorus1.stChords(),clickChorus
+  riffChorus1.stBass(),chordsChorus1.stChords(),clickChorus.stClick()
 )
 const stackChorus2 = stack(
-  riffChorus2.stBass(),chordsChorus2.stChords(),clickChorus
+  riffChorus2.stBass(),chordsChorus2.stChords(),clickChorus.stClick()
 )
-
-arrange(
+const chorus = arrange(
+  [1,stackChorus1],
+  [1,stackChorus2]
+)
+const form = arrange(
   [3,stackA],
   [0.5,stackFill],
   [1,stackChorus1],
   [1,stackChorus2],
-).when(toggle(["1","0"],60),x=>x.rib(0,1)) //<
+)
+$:toggle([stackA,form,chorus],'<')
+$:form.gain(0).color('red')
+$:chorus.gain(0).color('green')

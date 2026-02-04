@@ -7,8 +7,8 @@ const low = [1,0.3,0]
 const formA = "[eb2:major [d2:locrian g2:phrygian]] [c2:mixolydian [bb2:minor eb2:mixolydian]]"
 const formB = "[ab2:major db2:lydian eb2:major c2:minor] [f2:mixolydian [f2:minor bb2:mixolydian]]"
 const formC = seq("[ab2:major db2:lydian eb2:major [a2:locrian d2:mixolydian]]",
-  "[eb2:major a2:mixolydian g2:minor c2:mixolydian f2:minor bb2:mixolydian eb2:major bb2:mixolydian]"
-const form = arrange([1,formA],[1,formB])
+  "[eb2:major a2:mixolydian g2:minor c2:mixolydian f2:minor bb2:mixolydian eb2:major bb2:mixolydian]")
+const form = arrange([1,formA],[1,formB],[1,formA],[1,formC])
 setcpm(85/16)
 
 stack(

@@ -1,19 +1,19 @@
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
 setcpm(130)
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
-const form = `<F:mixolydian@8 Bb:mixolydian@4 F:mixolydian@4
+const form = `<F:mixolydian@8 Bb:mixolydian@4 F:mixolydian@2 B:mixolydian@2
   Bb:mixolydian@2 A:phrygian:dominant@2 Ab:mixolydian@2
   G:mixolydian@2 Ab:mixolydian@4 F:mixolydian@2 F:mixolydian@2>/3`
 const bassgroove1 = "[0 - -1]"
  const alt_drums =
-   alternate(slider(0.293),slider(0.981),192) //ö
+   alternate(slider(0.293),slider(0.981),'ö')
 $: stack(
 // main melody loop
 n("<0 4 9 0 [7|3]>*3").scale(form)
   .trans(-12)
-  .gain(mute(slider(0.486),222))//ä
+  .gain(mute(slider(0.486),'ä'))
 .octave(-1).s("sawtooth").acidenv(slider(0.18))
 
 // visual the melody with pianoroll
@@ -22,7 +22,7 @@ n("<0 4 9 0 [7|3]>*3").scale(form)
 n("<[[[0 - [-|-|2|1]?0.6]*4]@4 - [0 - -1]]*8@8 [0 -@2]*48@8 >/6")
   .scale(form).
   trans(-24)
-  .gain(mute(slider(0.777),59))//ü
+  .gain(mute(slider(0.777),'ü'))
 // change melody to sawtooth, add slider
 .octave(0).s("supersaw").acidenv(slider(0.364))
 // visual the melody with pianoroll
@@ -34,8 +34,8 @@ n("<[[[0 - [-|-|2|1]?0.6]*4]@4 - [0 - -1]]*8@8 [0 -@2]*48@8 >/6")
    .gain(alt_drums.main)
    ._scope(), 
 s("[rd [rd?0.35 - rd?0.4] rd?0.4]/3").bank("rm50")
-  .gain(mute(slider(0.305),192)) //ö
-).when(toggle(["0","1"],60),x=>x.rib(6,6)) //<
+  .gain(mute(slider(0.305),'ö'))
+).when(toggle(["1","0"],'<'),x=>x.rib(6,6))
 
 $: n("0").scale(form).gain(0).color('red')
 $: sound("hh/3").decay(0.075).gain(alt_drums.alt)
