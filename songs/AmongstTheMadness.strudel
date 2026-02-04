@@ -4,16 +4,22 @@ const bounce = [1, 0, 0.8, 0, 0.1, 0, 0.3]
 const mid = [1, 0, 0.8, 0, 0.1, 0, 0, 0.3]
 const low = [1,0.3,0]
 
-setcpm(85/4)
+const formA = "[eb2:major [d2:locrian g2:phrygian]] [c2:mixolydian [bb2:minor eb2:mixolydian]]"
+const formB = "[ab2:major db2:lydian eb2:major c2:minor] [f2:mixolydian [f2:minor bb2:mixolydian]]"
+const formC = seq("[ab2:major db2:lydian eb2:major [a2:locrian d2:mixolydian]]",
+  "[eb2:major a2:mixolydian g2:minor c2:mixolydian f2:minor bb2:mixolydian eb2:major bb2:mixolydian]"
+const form = arrange([1,formA],[1,formB])
+setcpm(85/16)
 
 stack(
-note("[- 0] -@2 [- 0] - [- 0] - -7")
-  .scale("eb2:major")
+note("[[- 0] -@2 [- 0] - [- 0] - -7]!4")
+  .scale(toggle(["eb2:major",form,formA,formB,formC],'<'))
   .sound("square")
   .partials(toggle([mid,bounce,low],'y'))
-  .penv(20).panchor(0).pdec(slider(0.06675,0,0.25))
+  .penv(20).panchor(0).pdec(slider(0.03275,0,0.25))
   .when(toggle(["0","0","0 [0 1]"],'y'), x=>x.trans(24))
   ,
-s("hh:3*4").decay(0.075).gain(mute(slider(1),'#')),
-s("[- sd:6]*2").gain(slider(0.2025,0,0.5))
-  ).swing(8)
+s("hh:3*16").decay(0.075).gain(mute(slider(1),'#')),
+s("[- sd:6]*8").gain(slider(0.2025,0,0.5)),
+note("0*8").scale(form).gain(0).color('red')
+  ).swing(32)
