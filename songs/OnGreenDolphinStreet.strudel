@@ -5,10 +5,10 @@ const subbasslineA = "0 [- 4] [- 4] [- 4]?0.75"
 const subbasslineB = "0*8"
 const bassline = "[0 -] 0*2 [- 0]?0.6 [0 -] [- 0] - 0 -"
   .sound("gm_agogo, gm_music_box")
-  .gain(mute(slider(0.4,0,1),'ü'))
+  .gain(mute(slider(0.074,0,1),'ü'))
 
 const scaleA ="<c2:major@2 c2:minor@2 d2:mixolydian [d2:mixolydian db2:major] c2:major@2>"
-const scaleB ="<c2:major@4 eb2:major@3 c2:major>"
+const scaleB ="<c2:major@2 c2:major@2 eb2:major@2 eb2:major c2:major>"
 
 let subbassA = n(subbasslineA)
   .sound("supersaw")
@@ -39,23 +39,22 @@ let bassB = n(bassline.slow(2))
 let stackA = stack(
   subbassA,
   bassA,
-  //s("- hh:3*2 [- oh:2?0.7] hh"),
-  //s("bd:2*2")
+  s("- hh:3*2 [- oh:2?0.7] hh").gain(mute(slider(0.558),'ö')),
+  s("bd:2*2").gain(mute(slider(0.558),','))
 )
 
 let stackB = stack(
   subbassB,
   bassB,
-  //s("-@3 hh*2 -@3 hh:3"),
-  //s("bd:2/2")
+  s("tb -@2 hh*2 -@3 hh:3").gain(mute(slider(0.558),'ö')),
+  s("bd:2").gain(mute(slider(0.558),','))
 )
 
-const whole = ["8","8"]
-// const parts = [whole,[8,0],[0,8]]
-// let arrangement = toggle([8,0],'<')
-// console.log('arrangement: ${arrangement}');
-arrange(
+const form = arrange(
  [8,stackA],
- [8,stackB]
+ [8,stackB] 
 )
-//toggle([stackA,stackB],'<')
+const parts = [stackA,form,stackB]
+let arrangement = toggle(parts,'<')
+$: arrangement
+$: form.gain(0).color('red')
