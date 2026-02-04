@@ -1,17 +1,22 @@
 function toggle(values, keyInput) {
   let index = 0;
- //console.log(`toggle() called with keyInput: "${keyInput}"`); // DEBUG  
+ //console.log(`toggle() called with keyInput: "${keyInput}"`); // DEBUG 
+ //console.log('toggle() called with keyInput: ' + keyInput); // DEBUG strudel
   // Define the event listener function
   const toggleFunction = () => {
     const value = values[index];
     index = (index + 1) % values.length;
     //console.log(`toggleFunction() called, returning: ${value}, new index: ${index}`); // DEBUG
+    //console.log('toggleFunction() called, returning: ' + value + ', new index: ' 
+                + index); // DEBUG strudel
     return value;
   };
   
   // Add keyboard event listener
   window.addEventListener('keydown', (e) => {
    //console.log(`Key pressed: ${e.key}, Ctrl: ${e.ctrlKey}, Match: ${e.ctrlKey && e.key === keyInput}`); // DEBUG
+   //console.log('Key pressed: ' + e.key + ', Ctrl: ' + e.ctrlKey + ', Match: ' + 
+               e.ctrlKey && e.key === keyInput); // DEBUG strudel
     if (e.ctrlKey && e.key === keyInput) {
       // Trigger the toggle
       toggleFunction();
@@ -21,6 +26,7 @@ function toggle(values, keyInput) {
   });
   
   // Return the current value directly
+  //console.log('current value: ' + values[index]); // DEBUG strudel
   return ref(() => values[index]);
 }  
   
