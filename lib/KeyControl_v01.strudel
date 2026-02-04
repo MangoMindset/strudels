@@ -16,7 +16,7 @@ function toggle(values, keyInput) {
   window.addEventListener('keydown', (e) => {
    //console.log(`Key pressed: ${e.key}, Ctrl: ${e.ctrlKey}, Match: ${e.ctrlKey && e.key === keyInput}`); // DEBUG
    //console.log('Key pressed: ' + e.key + ', Ctrl: ' + e.ctrlKey + ', Match: ' + 
-               e.ctrlKey && e.key === keyInput); // DEBUG strudel
+   //            e.ctrlKey && e.key === keyInput); // DEBUG strudel
     if (e.ctrlKey && e.key === keyInput) {
       // Trigger the toggle
       toggleFunction();
