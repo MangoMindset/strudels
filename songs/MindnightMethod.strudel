@@ -1,18 +1,25 @@
 //@title Midnight Method
-//https://www.youtube.com/watch?v=tJ7BkPBvzh0
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@latest/lib/KeyControl_v01.strudel')).text()); })();
-setcpm(95/8)
+//@youtube https://www.youtube.com/watch?v=tJ7BkPBvzh0
+//@songlist https://www.streamersonglist.com/t/mangomindsetlive/songs/5577384
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
+setcpm(95/16)
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12)
 )
+const riffA = "[[0 1] -]!4 [2 -@2]!3*4/3 [2 -] [[0 1] -]!4 [2,9]@4"
+const adds = "<0 4 7 [0 [6 1]]>"
 stack(
-n("[[0 1] -]!4 [2 -@2]!3*4/3 [2 -]".add("<2 0 7 [0 [6 1]]>"))
+n(riffA.add(toggle(["0",adds],'y')))
   .scale("ab1:minor")
   .sound("gm_tuba")
   .diode(1)
   .room(0.4)
-  .acidenv(slider(0.235))
+  .acidenv(slider(0.212))
   .gain(mute(slider(0.697),'ü'))
 ,
-sound("hh:3*16")
-).swingBy(1/4, 16)
+sound("-@3 [cr oh [- oh] -]")
+  .bank("rolands50")
+  .gain(mute(slider(0.24,0,1),'#'))
+  .when("0@3 [1 0@3]", x=>x.bpf("8000:2|2000:2|12000:1")),
+sound("hh:3*2!3 -").decay(0.1)
+).swing(32)
