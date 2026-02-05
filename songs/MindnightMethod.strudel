@@ -8,7 +8,7 @@ register('acidenv', (x, pat) => pat.lpf(100)
 )
 const riffA = "[[0 1] -]!4 [2 -@2]!3*4/3 [2 -] [[0 1] -]!4 [2,9]@4"
 const adds = "<0 4 7 [0 [6 1]]>"
-stack(
+$:stack(
 n(riffA.add(toggle(["0",adds],'y')))
   .scale("ab1:minor")
   .sound("gm_tuba")
@@ -23,3 +23,5 @@ sound("-@3 [cr oh [- oh] -]")
   .when("0@3 [1 0@3]", x=>x.bpf("8000:2|2000:2|12000:1")),
 sound("hh:3*2!3 -").decay(0.1)
 ).swing(32)
+
+$:riffA.add(adds).gain(0).color('red')
