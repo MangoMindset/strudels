@@ -1,0 +1,17 @@
+//@title Feel Good Inc.
+//@youtube 
+//@songlist 
+await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
+setcpm(140/16)
+
+const basslineA = n("[0 [- 0] [1 2] [- 5] [- 4@3 -@4]@4] [3 [- 3] [5 4] [- 2] [- 0@3 -@4]@4]").scale("Eb:minor")
+const click = sound("white*8").decay(0.075)
+const basslineB = n("0 -1 -2 -1")
+  .lastOf(4,x=>n("[0 - 0*2] -1*2 -2*2 -1*2"))
+  .scale("Eb:minor")
+
+$: arrange(
+  [4,basslineA],
+  [4,basslineB]
+)
+$: click
