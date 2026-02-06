@@ -9,6 +9,8 @@ const formB = "[ab2:major db2:lydian eb2:major c2:minor] [f2:mixolydian [f2:mino
 const formC = seq("[ab2:major db2:lydian eb2:major [a2:locrian d2:mixolydian]]",
   "[eb2:major a2:mixolydian g2:minor c2:mixolydian f2:minor bb2:mixolydian eb2:major bb2:mixolydian]")
 const form = arrange([1,formA],[1,formB],[1,formA],[1,formC])
+const drums_alt = alternate(slider(0.131),slider(0.28),'#')
+
 setcpm(85/16)
 
 stack(
@@ -16,10 +18,15 @@ note("[[- 0] -@2 [- 0] - [- 0] - -7]!4")
   .scale(toggle(["eb2:major",form,formA,formB,formC],'<'))
   .sound("square")
   .partials(toggle([mid,bounce,low],'y'))
-  .penv(20).panchor(0).pdec(slider(0.03275,0,0.25))
-  .when(toggle(["0","0","0 [0 1]"],'y'), x=>x.trans(24))
+  .penv(20).panchor(0).pdec(slider(0.0215,0,0.25))
+  .when(toggle(["0","0","[0 [0 1]]*4"],'y'), x=>x.trans(24))
   ,
-s("hh:3*16").decay(0.075).gain(mute(slider(1),'#')),
-s("[- sd:6]*8").gain(slider(0.2025,0,0.5)),
+s("hh:3*32")
+  .bank('lm2')
+  .gain(drums_alt.main),
+s("[[bd|[- bd]] [- bd]?0.7 sd [- bd] - [- bd] sd bd]*4")
+  .bank('lm1')
+  .gain(mute(slider(0.847),'#')),
+s("hh:3*8").decay(0.1).gain(drums_alt.alt),
 note("0*8").scale(form).gain(0).color('red')
   ).swing(32)
