@@ -1,30 +1,32 @@
 //@title Well you needn't
-
-setcpm(90/4)
+register('stBass',p=>p
+  //.gain(mute(slider(0.395),'ä'))
+  .sound("gm_acoustic_bass")
+  .distort("3:0.4")
+  .trans("-12")
+  )
+  setcpm(90/4)
+const basslineA = "[0 - 0] - -3 [0 - 0?0.2] [-@2 0?0.65] - 0 [2|-1]?0.8"
+const basslineB = "[0 - 0] [0?0.8 - 3?] - [0?0.3 - 0] [- - 0?0.4] - 0 -1?0.8"
+const basslineB1 = "[0 - 0]  -@2 [0?0.3 - 0] - - 0 [2|-1]?0.8"
 //TODO: piano part
 const formA = "f:major gb:mixolydian"
 //Miles Davis B part
 const formB = "<g:mixolydian ab:mixolydian [a:mixolydian bb:mixolydian b:mixolydian bb:mixolydian] [a:mixolydian ab:mixolydian g:mixolydian c:mixolydian]>"
-const bassgrooveA = n("[0 - 0] - -3 [0 - 0?0.2] [-@2 0?0.65] - 0 [2|-1]?0.8")
+const bassgrooveA = n(basslineA)
   .scale(formA)
-  .sound("gm_acoustic_bass")
-  .distort("3:0.4")
-  .trans("-12")
   .lastOf(4, x=>x.lpf(180)
     .scale("f:major"))
-const stringBassgrooveB = "[0 - 0]  -@2 [0?0.3 - 0] - - 0 [2|-1]?0.8"
-const bassgrooveB = n("[0 - 0] [3?0.8 - 0?0.3] - [0?0.3 - 0] [- - 0?0.4] - 0 -1?0.8")
+const bassgrooveB = n(basslineB)
   .scale(formB)
-  .trans(-12).sound("supersaw").cutoff("800:4:2")
-//$: bassgrooveA.scale("f:major gb:mixolydian").sound("gm_acoustic_bass").distort("3:0.4").trans("-12").lastOf(4, x=>x.lpf(180).scale("f:major"))
-//$: sound("[bd - bd] - sd:2 [bd - bd?0.2] [- bd?0.95 bd?0.65] oh:3 - oh:3").gain(slider(0.33))
-//$: sound("hh:2*8").gain(slider(0.239)) 
+$: sound("[bd - bd] - sd:2 [bd - bd?0.2] [- bd?0.95 bd?0.65] oh:2 - oh:2").gain(slider(0.33))
+$: sound("hh:2*8").gain(slider(0.239)) 
 $: arrange(
-  [4,bassgrooveA],
-  [8,bassgrooveA],
-  [4,bassgrooveB],
-  [0,bassgrooveA]
-          ).gain(slider(0.15))
-
+  [4,bassgrooveA.stBass()],
+  [8,bassgrooveA.stBass()],
+  [4,bassgrooveB.stBass()],
+  [0,bassgrooveA.stBass()]
+//
+).gain(slider(0.15))
 //Metronome
-$: sound("hh:2*4").gain(slider(0.393)) 
+$: sound("white:2*4").decay(0.06).gain(slider(0.393)) 
