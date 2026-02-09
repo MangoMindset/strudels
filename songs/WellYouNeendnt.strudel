@@ -1,6 +1,7 @@
 //@title Well you needn't
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 register('stBass',p=>p
-  //.gain(mute(slider(0.395),'ä'))
+  .gain(mute(slider(0.142),'ä'))
   .sound("gm_acoustic_bass")
   .distort("3:0.4")
   .trans("-12")
@@ -19,14 +20,15 @@ const bassgrooveA = n(basslineA)
     .scale("f:major"))
 const bassgrooveB = n(basslineB)
   .scale(formB)
-$: sound("[bd - bd] - sd:2 [bd - bd?0.2] [- bd?0.95 bd?0.65] oh:2 - oh:2").gain(slider(0.33))
-$: sound("hh:2*8").gain(slider(0.239)) 
+const drums_alt = alternate(slider(0.239),slider(0.393),'#')
+$: sound("[bd - bd] - sd:2 [bd - bd?0.2] [- bd?0.95 bd?0.65] oh:2 - oh:2").gain(drums_alt.main)
+$: sound("hh:2*8").gain(mute(drums_alt.main))
 $: arrange(
   [4,bassgrooveA.stBass()],
   [8,bassgrooveA.stBass()],
   [4,bassgrooveB.stBass()],
   [0,bassgrooveA.stBass()]
 //
-).gain(slider(0.15))
+)
 //Metronome
-$: sound("white:2*4").decay(0.06).gain(slider(0.393)) 
+$: sound("white:2*2").decay(0.06).gain(drums_alt.alt)
