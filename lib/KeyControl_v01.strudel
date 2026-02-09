@@ -8,7 +8,7 @@ function toggle(values, keyInput) {
     index = (index + 1) % values.length;
     //console.log(`toggleFunction() called, returning: ${value}, new index: ${index}`); // DEBUG
     //console.log('toggleFunction() called, returning: ' + value + ', new index: ' 
-                + index); // DEBUG strudel
+    //            + index); // DEBUG strudel
     return value;
   };
   
