@@ -1,7 +1,5 @@
 //@title Icebreaker
-await (async () => { (0, eval)(await (await fetch(
-  'https://cdn.jsdelivr.net/gh/MangoMindset/strudels@master/lib/KeyControl_v01.strudel'
-)).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 setcpm(150/4)
 const subdivs = ["1","3","1.2","1","2"]
 

@@ -1,5 +1,5 @@
 //@title Amongst the madness
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 const bounce = [1, 0, 0.8, 0, 0.1, 0, 0.3]
 const mid = [1, 0, 0.8, 0, 0.1, 0, 0, 0.3]
 const low = [1,0.3,0]

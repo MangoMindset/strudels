@@ -1,5 +1,5 @@
 //@title Jerk It Out
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 register('stChords',p=>p
   .sound("gm_electric_guitar_jazz")
   .sustain(10)

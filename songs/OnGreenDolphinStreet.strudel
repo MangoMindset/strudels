@@ -1,5 +1,5 @@
 //@title On Green Dolphin Street
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 
 const subbasslineA = "0 [- 4] [- 4] [- 4]?0.75"
 const subbasslineB = "0*8"

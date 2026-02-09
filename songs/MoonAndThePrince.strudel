@@ -1,5 +1,5 @@
 //@title The Moon and the Prince @by MangoMindset
-await (async () => { (0, eval)(await (await fetch('https://cdn.jsdelivr.net/gh/MangoMindset/strudels@main/lib/KeyControl_v01.strudel')).text()); })();
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 setCps(110/60/8)
 
 const scaleMajor ="<c2:mixolydian@2 f2:major c2:mixolydian [g2:minor f2:major] c2:mixolydian>"
