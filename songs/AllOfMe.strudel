@@ -14,15 +14,15 @@ const chords = cat(
   "C^7", "E7", "A7", "Dm7",
   "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]"
 )
-const alt_drums = alternate(slider(0.254),slider(0.432), 'ö')
+const alt_drums = alternate(slider(0.254),slider(0.432), '#')
 stack(
 chords.chord().layer(
 //Bass
-x=>n(toggle(basslines, '<')).set(x).mode("root:g2").voicing()
+x=>n(toggle(basslines, 'y')).set(x).mode("root:g2").voicing()
   .s('gm_slap_bass_1')
   .bpf(700).bpq(0.4)
   .acidenv(slider(0.417))
-.gain(mute(slider(0.742),'ü')),
+.gain(mute(slider(0.742),'ä')),
 ),
 //Drums
 
@@ -30,4 +30,4 @@ sound("[bd hh*2] [hh*2 bd] [bd hh*2] hh*4").bank("R8").gain(alt_drums.main),
 //sound("[bd hh*2] hh*3 [bd hh hh] hh*4").bank("R8").gain(0.3)
 //Metronome
 sound("hh*2").gain(alt_drums.alt)
-).when(toggle(["1","0"],'y'),x=>x.rib(0,4))
+).when(toggle(["1","0"],'<'),x=>x.rib(0,4))
