@@ -1,38 +1,22 @@
-// @title Key Control
-
-const pats = [
-  "0",
-  "<6 4 -2>",
-  "<2 5 0 3>"
-]
-
-let _pat = pats[0];
-
-//manipulating setcpm does not seem to work
-let _cpmVar = 120/4;
-
-document.onkeydown = (e) => {
-  if (e.ctrlKey && e.keyCode == 59) { //ö
-    _pat = pats[1];
-  }
-if (e.ctrlKey && e.keyCode == 222) { //ä
-    _pat = pats[2];
-  }
-}
-let pat = ref(() => _pat)
-let cpmVar = ref(() => _cpmVar)
-
-setcpm(120/4)
-//setcpm(cpmVar) yields
-//"[query] error: Invalid argument"
-
-stack(
-pat.sub("[1 6]/16").struct("<x(3,8)>").add("< [0,<2 4 6>] [4,0]>*4")
-  .scale("C:blues").note().delay(.25).sound(sine),
-  s("bd <sd [[sd,oh] bd]>, hh*8"),
-  //patterns with gain 0 to visually know where in the pattern we are
-  pats[1].gain(0).color("red"),
-  pats[2].gain(0).color("green")
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
+//setcpm(100/2)
+const chordsA = cat(
+    "C^7", "E7", "A7", "Dm7"
+)
+const chordsForm = cat(
+    "C^7", "E7", "A7", "Dm7",
+  "E7", "Am7", "D7", "[Dm7 G7]",
+  "C^7", "E7", "A7", "Dm7",
+  "[F^7 F#7b5]", "[C^7 A7]", "[Dm7 G7]", "[C6 Eb7 Dm7 G7]"
 )
 
-
+$: toggle([chordsA,chordsForm],'<').chord().layer(
+//Bass
+x=>n("0*2").set(x).mode("root:g2").voicing()
+  .s('gm_slap_bass_1')
+  .bpf(700).bpq(0.4)
+.gain(slider(0.742)),
+).when(toggle(["1","0"],'<'), x=>x.slow(4))
+$: chordsA.gain(0).color('red')
+$: chordsForm.gain(0).color('green')
+$: cps(toggle([100/60*2,100/60/2],'<')).gain(0)
