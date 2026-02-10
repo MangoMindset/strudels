@@ -1,14 +1,18 @@
 //@title Tridezimal @by ToxyK Beats
 await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 register('stBass',p=>p
-  .gain(mute(slider(0.395),'ä'))
+  .gain(mute(slider(0.461),'ä'))
   .sound("gm_fretless_bass")
-  .distort("2:0.4")
-  .lpf(300)
   )
+register('acidenv', (x, pat) => pat.lpf(100)
+        .lpenv(x * 9).lps(.2).lpd(.12))
 const riffA = note("e1 g1 a1 c2 - g1 b1 c2 d2!2 e1 g1 a1 c2 - g1 b1 c2 d2!2 - - d2!2 - -")
   .lpa(0.35)
-const riffB = note("a1@2 - c2@2 - d2@4 a1@2 - c2@2 -@3 d2@4 g1@4")
+  .distort("2:0.4")
+  .lpf(300)
+const riffB = note("a1 -@2 c2 -@2 d2@4 a1 -@2 c2 -@4 d2@4 g1@4")
+  .acidenv(slider(0.439))
+  .diode("2:0.8")
 
 setcpm(100/8)
 const drums_alt = alternate(slider(0.517),slider(0.285),'#')
