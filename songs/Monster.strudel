@@ -1,0 +1,20 @@
+//@title Monster
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
+register('stBass',p=>p
+  .gain(mute(slider(0.395),'ä'))
+  .sound("supersaw")
+  .lpf(300)
+  .lpenv(2)
+  .attack(0.25)
+  )
+const bassA = note("[0,4]".euclid(3,8))
+
+setcpm(105/2)
+const drums_alt = alternate(slider(0.517),slider(0.285),'#')
+$:bassA.scale("<C#:minor B:major A:Major@2>").trans(-12)
+.stBass()
+.gain(mute(slider(1),'ä'))
+$click: sound("hh:3*2")
+  //.decay(0.25)
+  .bpf("3000:3")
+  .gain(drums_alt.main)
