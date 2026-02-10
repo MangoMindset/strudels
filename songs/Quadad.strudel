@@ -1,0 +1,10 @@
+const chords = "F7*2 Bb^7*2".chord()
+  .voicing()
+  .sound("gm_koto")
+  .bpf("2000:2 1500:4 3500:1 2400:4")
+
+$: chords
+const semiqudad = "- - rim:3*2 oh:2 - hh"
+$click: sound("- rim:3*2 - hh")
+.lastOf(4,x=>sound("- [- rim:3] - [hh rolandcompurhythm1000_perc]"))
+  .fast(4)
