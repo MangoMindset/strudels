@@ -1,11 +1,20 @@
 //@title Tridezimal @by ToxyK Beats
 await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
+register('stChords',p=>p
+  .gain(mute(slider(0.211),'ö'))
+  .chord().voicing()
+  .sound("piano")
+  )
 register('stBass',p=>p
   .gain(mute(slider(0.552),'ä'))
   .sound("gm_fretless_bass")
   )
 register('acidenv', (x, pat) => pat.lpf(100)
         .lpenv(x * 9).lps(.2).lpd(.12))
+
+const chordsA = "-" //"Am - D7@0.5 Am - D7 -".stChords
+//TODO sound and gain are not recognized
+
 const bassA = note("e1 g1 a1 c2 - g1 b1 c2 d2!2 e1 g1 a1 c2 - g1 b1 c2 d2!2 - - d2!2 - -")
   .lpa(0.35)
   .distort("2:0.4")
@@ -16,16 +25,16 @@ const bassB = note("a1 -@2 c2 -@2 d2@4 a1 -@2 c2 -@4 d2@4 g1@4")
 const bassC = note("a1 -@2 c2 c2 d2@2 -@3 g1 -@0.5 g1 -@0.5")
   .acidenv(slider(0.485))
   .postgain(3)
-
+const partA = stack(chordsA,bassA)
 const form = arrange(
-  [4,bassA],
+  [4,partA],
   [4,bassB],
   [4,bassC]
 )
 
 setcpm(100/8)
 const drums_alt = alternate(slider(0.517),slider(0.285),'#')
-const parts_toggle = toggle([bassA,bassB,bassC],'y')
+const parts_toggle = toggle([partA,bassB,bassC],'y')
 $:toggle([parts_toggle,form],'<')
 .stBass()
 $click: sound("hh:3*6.5")
