@@ -1,0 +1,10 @@
+// @title Highway To Hell
+setcpm(8)
+const chords =  "A Em7 Eb7 D G Bm7 E7 A"
+$: chords.chord().voicing().struct("[- x*2]*8")
+  .sound("gm_epiano1").gain(slider(0.148))
+$: chords.chord().layer(
+  x=>n("0*8").set(x).mode("root:g2").voicing()
+  .s('gm_slap_bass_1').trans(-12)
+  )
+$: sound("hh:3*8")
