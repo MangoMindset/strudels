@@ -1,10 +1,16 @@
-const chords = "F7*2 Bb^7*2".chord()
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
+setcpm(13)
+
+const chords = "F7*2 Bb^7*2 F7*2 Cm*2".chord()
   .voicing()
   .sound("gm_koto")
   .bpf("2000:2 1500:4 3500:1 2400:4")
 
+$melody: note("<[f4 f4 [-@3 b4] [c5 eb5]]!3 [[f4 g4] [ab4 g4@2 f4@3 -@2]@2 [eb4 f4]]>")
+  .sound("gm_shakuhachi")
+  .room(0.3)
+  .gain(mute(slider(0.65),'ö'))
 $: chords
 const semiqudad = "- - rim:3*2 oh:2 - hh"
-$click: sound("- rim:3*2 - hh")
-.lastOf(4,x=>sound("- [- rim:3] - [hh rolandcompurhythm1000_perc]"))
-  .fast(4)
+$click: sound("[- rim:3*2 - hh]")
+.lastOf(4,x=>sound("[- [- rim:3] - [hh rolandcompurhythm1000_perc]]"))
