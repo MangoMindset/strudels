@@ -1,0 +1,11 @@
+//this code works in strudel.cc, but not in flok.cc
+ window.addEventListener('keydown', (e) => {
+   console.log('Key pressed'); // DEBUG
+  if (e.ctrlKey && e.key === 'a') {
+      // Trigger the toggle
+     alert('a'); 
+    }
+  }); 
+
+setcpm(30)
+$click: sound("- rim:3*2 - hh")
