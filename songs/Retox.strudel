@@ -9,9 +9,9 @@ register('bpfill', (x,pat) => pat.bpf(x).bpq("3 2 1 [0.5 0.25]"))
 
 const toggleMelody = mute(slider(0.32), 'ö');
 const toggleBass = mute(slider(0.58), 'ä');
-const alt_drums = alternate(slider(0.202),slider(0.961), '#')
+const alt_drums = alternate(slider(0.221),slider(0.961), '#')
 
-setcps(150/2048)
+setcps(130/2048)
 const retox_trunk = seq(
   ["[[[[9 -] 7] [- 9 - 7@2 - 7 9]@2 [- 7@2 -]]]",
             "[9 - 10 11 10@2 9 7@3 @2- 4 6 7 -]"],
@@ -24,7 +24,32 @@ const retox_volta_2 = seq(
    "[[- 7@2 -] [6 7@2 -]]",
    "[9 - 10 11 10@2 9 7]"
   )
-const bass = "7 3 7 [5 6]"
+const bass_mm = "7 3 7 [5 6]"
+
+const bs = {
+  0.75: note("[0 - 0 - 7@3 0]"),
+  0.125: "- - -",
+  0.8125: note("[- 7 - 0 7 0 7 -]"),
+  '0.375_0.46875': "[- 0 7 -] [7 0 7 -]",
+  0.4375: "[0 - 7 0] [7 - - -]",
+  0.1875: "[- 7 - -] 0",
+  0.3125: "- [7 0] [- 7] 0",
+  0.875: "[- - 7 -] [0@2 - -]",
+  '0.484375_0.375': "[- 0 - -] [7@2 0@2]",
+  0.5625: "7 - - 0 7 0 7 -",
+  0.0625: "[7 -] [0 -] - [7 -]",
+  '0.84375_0.15625': "[- 7] - 0 -"
+}
+
+//const bass_1 = seq(seq(bs[0.75], bs[0.125]), seq(bs['0.375_0.46875'], bs[0.4375]))
+const bass_3 = seq(seq(bs[0.75], bs[0.8125]), note("[- c1 - - c@3 c1 - c - c1 c c1 c -]"))
+
+const bass_pk = seq(
+  seq(seq(bs[0.75], bs[0.125]), seq(bs['0.375_0.46875'], bs[0.4375])),
+  seq(seq(bs[0.4375], bs[0.1875]), seq(bs[0.3125], bs[0.875])).transpose(3),
+  seq(seq(bs[0.75], bs[0.8125]), seq(bs['0.484375_0.375'], bs[0.5625])),
+  seq(seq(bs[0.5625], bs[0.0625]), seq(bs[0.4375], bs['0.84375_0.15625'])),
+)//.ribbon(0,0.25)
 
 const rand_scrub = seq(
   "0.75 0.125 [0.375 0.46875] 0.4375",
@@ -55,12 +80,19 @@ let melody = seq(retox_trunk,
   .scale("C2:Minor")
 
 stack(melody.gain(toggleMelody),
-  bass
+  bass_mm
   .compressor("-15:20:10:0.1:.02")
   .acidenv("<0.2 0.4 0.5 0.35>")
   .sound("saw")
   .scale("C1:Minor")
   .gain(toggleBass),
+  bass_pk
+  .compressor("-15:20:10:0.1:.02")
+  // .acidenv("<0.2 0.4 0.25 0.35>")
+  .acidenv("0.4")
+  .sound("saw")
+  .scale("C1:Minor")
+  .gain(slider(1)),
   s("amen2*2").fit()
   //.scrubResolution(16)
   .scrub(rand_scrub)
@@ -74,4 +106,4 @@ stack(melody.gain(toggleMelody),
 clickA
  .lastOf(4, x=>clickFill)
  .gain(alt_drums.alt)
-)
+)//.ribbon(0.0,0.5)
