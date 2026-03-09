@@ -3,7 +3,7 @@
 await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 setcpm(30*0.85)
 const intro = sound("<-!4>")
-const partA = chord("<[A2@3 F2@5] [G2@3 D2@5] [A2@3 F2@5] [D2@3 E5@5]>").voicing()
+const partA = chord("<[A2@3 F2@5] <[G2@3 D2@5] [D2@3 E5@5]>>").voicing()
   .sound("piano")
   .trans("-12")
   .decay(2.3)
@@ -11,11 +11,13 @@ const partA = chord("<[A2@3 F2@5] [G2@3 D2@5] [A2@3 F2@5] [D2@3 E5@5]>").voicing
 const shaker = sound("sh*16").bank("lm1")
   .gain(slider(1))
   .attack(0.9)
+  .early(0.45)
   .when("[0 1]*8",x=>x.lpf(9000))
 
 const melody = arrange(
-  [8, intro],
-  [8, partA]
+  [4, partA],
+  [2, intro]
 )
 $: toggle([melody,intro,partA],'<')
 $: shaker
+//$: melody.gain(0).color('red')
