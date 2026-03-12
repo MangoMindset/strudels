@@ -1,0 +1,22 @@
+// @title Basket Case
+// @by Green Day
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
+setcpm(20)
+const partA = chord("<[Eb@0.875 Bb@1.125] [Cm@0.875 Gm@1.125] [Ab@0.875 Eb@1.125] Bb>")
+const partB = chord(cat("Ab Eb Bb@2 Ab Bb Eb@2",
+                        "Ab Bb [Eb Db] Cm",
+                        "Ab Bb [Eb Bb] [Cm Bb]",
+                        "[Eb Bb] [Cm Bb]")
+                   )
+
+const form = arrange(
+  [16, partA],
+  //[18, partB]
+)
+
+$:
+//n("0@1.5 0 0@0.5 0")
+n("0!2 0*2 0@0.5 0@1.5 0 0*2!2")
+  .set(form).voicing()
+  .trans(-24)
+  .s('gm_electric_bass_finger')
