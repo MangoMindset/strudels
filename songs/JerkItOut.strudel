@@ -24,6 +24,12 @@ const riffChorus1 = "[0 2] [1 2]".trans(12).attack(0.4)
 const riffChorus2 = "[0 2] 1".trans(12).attack(0.4)
 
 const chordsA = "[[G#m|G#m!2] B [F#@3 E@5|F# G#m]@2]*2"
+const chordsHolger = ["[G#m Bm F# E]*2",
+                     "[G#M7 BM7 F# E]*2",
+                     "[G#m GM7 F# E]*2",
+                     "[G#m Bm F# Em]*2",
+                     "[G#m Bm C E]*2",
+                     "[G#m Gadd9 F# C]*2"]
 const chordsFill = "[G#m*2 B F#*2 E]*2"
 const chordsChorus1 = "E^7 G#m F# G#m"
 const chordsChorus2 = "E^7 G#m F#@2"
@@ -34,6 +40,9 @@ const clickChorus = s("hh:2*4").distort(1)
 
 const stackA = stack(
   riffA.stBass(),chordsA.stChords(),clickA.stClick()
+)
+const stackHolger = stack(
+  chordsHolger[5].stChords(),clickA.stClick()
 )
 const stackFill = stack(
   riffFill.stBass(),chordsFill.stChords(),clickFill.stClick()
