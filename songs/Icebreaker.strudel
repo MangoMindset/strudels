@@ -11,10 +11,11 @@ $s: n("<[4@3 7@4 9@5]@3 [- 10] 8?0.3 6 7@2>")
 .gain(mute(slider(0.311), 'ö')) //ä
 .scale("F:minor")
 
-$s: n("0*4")
+$s: n("0 [0*4]@3 1 [1*4]@3 2 [2*4]@3 3 [3*4]@3").slow(8)
+  //.struct("x [x*4]@3")
   .sound("supersaw")
   .scale("F:minor")
-  .detune("<0.25 0 0.4 <1@2 0.7 2.8>>")
+  .detune("<0.25 0 0.4 <1@2 0.7 2.8>>/2")
   .lpf(300)
   .ply(toggle(subdivs, 60)) //<
   .gain(mute(slider(0.383),'ä'))
