@@ -6,28 +6,40 @@ register('stBass',p=>p
   .distort("3:0.4")
   .trans("-12")
   )
-  setcpm(90/4)
+register('stChords',p=>p
+  .voicing()
+  .sound("gm_drawbar_organ")
+  .gain(mute(slider(0.356),'ö'))
+)
+
+setcpm(90/4)
 const basslineA = "[0 - 0] - -3 [0 - 0?0.2] [-@2 0?0.65] - 0 [2|-1]?0.8"
 const basslineB = "[0 - 0] [0?0.8 - 3?] - [0?0.3 - 0] [- - 0?0.4] - 0 -1?0.8"
 const basslineB1 = "[0 - 0]  -@2 [0?0.3 - 0] - - 0 [2|-1]?0.8"
-//TODO: piano part
+const chordsA = chord("F6@2 -@4 Gb7@2").stChords()
+//TODO: check chords for right length
+const chordsB = chord("G7@2 Ab7@2 A7 Bb7 B7 Bb7 A7 Ab7 G7 C7")
 const formA = "f:major gb:mixolydian"
 //Miles Davis B part
 const formB = "<g:mixolydian ab:mixolydian [a:mixolydian bb:mixolydian b:mixolydian bb:mixolydian] [a:mixolydian ab:mixolydian g:mixolydian c:mixolydian]>"
-const bassgrooveA = n(basslineA)
+const grooveA = stack(
+  n(basslineA)
+  .stBass()
   .scale(formA)
   .lastOf(4, x=>x.lpf(180)
-    .scale("f:major"))
+    .scale("f:major")),
+  chordsA
+  )
 const bassgrooveB = n(basslineB)
   .scale(formB)
 const drums_alt = alternate(slider(0.239),slider(0.393),'#')
 $: sound("[bd - bd] - sd:2 [bd - bd?0.2] [- bd?0.95 bd?0.65] oh:2 - oh:2").gain(drums_alt.main)
 $: sound("hh:2*8").gain(mute(drums_alt.main))
 $: arrange(
-  [4,bassgrooveA.stBass()],
-  [8,bassgrooveA.stBass()],
+  [4,grooveA],
+  [8,grooveA],
   [4,bassgrooveB.stBass()],
-  [0,bassgrooveA.stBass()]
+  [0,grooveA]
 //
 )
 //Metronome
