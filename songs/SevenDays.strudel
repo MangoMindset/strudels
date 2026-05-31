@@ -7,7 +7,7 @@ register('stChords',p=>p
 )
 setCps(1/2)
 
-const riffA = "0 -@2 [1,3,5] -"
+const riffA = "0 -@2 [0,2,4] -"
 
 stack(
 riffA.stChords()
