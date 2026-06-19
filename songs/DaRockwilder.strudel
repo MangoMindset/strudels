@@ -1,6 +1,6 @@
 //@title Da Rockwilder
 setcpm(100/8)
-seq(
-    "B2 [- B2] A2 -",
-    "A2 [- A2] B2 -",
-  ).note()
+$: "B1 [- B1] A1 - A1 [- A1] B1 -".note().sound("gm_electric_bass_pick")
+
+//$: sound("-@2 hh!4 -@2 -@2 hh!6").fast(2)
+$: sound("bd@3 bd bd@4").fast(2)
