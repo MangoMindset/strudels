@@ -1,0 +1,43 @@
+// quelli-che-benpensano — Strudel-Loop (Takte 5–8)
+// Quelle: Downloads/quelli-che-benpensano.mxl | A-Dur, 4/4, 88 BPM
+// Pausen = "-" (KEINE Punkte: "." ist im Mini-Parser Subdivision-Shorthand!)
+// @ = Elongation via Gewicht: "a4@4 - - b4 cs5" -> Gewichte 4+1+1+1+1 = 8 Achtel
+
+// ---- Melodie: "Zweite Stimme" (Tenorsax, Achtelraster je Takt) ----
+let melodie = cat(
+  "a4@4 - - b4 cs5",   // Takt 5/7: A4 (2 Beats), Viertelpause, B4, C#5
+  "b4@2 fs5@4 e5 ds5"  // Takt 6/8: B4, F#5 (Bindebogen = 2 Beats), E5, D#5
+);
+
+// ---- Bass: Acoustic Bass (Achtelraster je Takt) ----
+let bass = cat(
+  "fs2@2 - cs3 d3@2 - d3",   // Takt 5/7: F#2, C#3, D3
+  "b2@2 - - - a2 d3 a2"      // Takt 6:   B2, A2, D3, A2
+);
+
+// ---- Drums: 16tel-Raster je Takt (cat = Takt 5, Takt 6) ----
+let kick = cat(
+  "x - - - - - x - x - - - - x x -",  // Takt 5 (x auf +6.5 = extra 16tel-Kick)
+  "x - - - - - x - - - - - - - x -"   // Takt 6
+);
+let snare = cat(
+  "- - - - x - - - - - - - x - - -",  // Backbeat 2 und 4
+  "- - - - x - - - - - - - x - - -"
+);
+let hat = cat(
+  "x - x - x - x - x - x - x - x -",  // Achtel-Hihat durchgehend
+  "x - x - x - x - x - x - x - x -"
+);
+let drums = stack(
+  kick.s("bd"),
+  snare.s("sd"),
+  hat.s("hh")
+);
+
+// ---- Loop ----
+stack(
+  melodie.note().s("gm_tenor_sax"),  // falls fehlt: s("sawtooth") o. ä.
+  bass.note().s("gm_acoustic_bass"),
+  drums
+).cpm(88 / 4)  // 88 BPM, 4/4: ein Zyklus = ein Takt
+// .clip(1) für saubere Release-Grenzen, falls gewünscht
