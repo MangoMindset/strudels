@@ -4,9 +4,10 @@
 // @ = Elongation via Gewicht: "a4@4 - - b4 cs5" -> Gewichte 4+1+1+1+1 = 8 Achtel
 
 // ---- Melodie: "Zweite Stimme" (Tenorsax, Achtelraster je Takt) ----
+await (async () => { (0, eval)(await (await fetch('https://raw.githubusercontent.com/MangoMindset/strudels/refs/heads/main/lib/KeyControl_v01.strudel')).text()); })();
 let melodie = cat(
   "a4@4 - - b4 cs5",   // Takt 5/7: A4 (2 Beats), Viertelpause, B4, C#5
-  "b4@2 fs5@4 e5 ds5"  // Takt 6/8: B4, F#5 (Bindebogen = 2 Beats), E5, D#5
+  "b4@2 fs5@4 e5 d5"  // Takt 6/8: B4, F#5 (Bindebogen = 2 Beats), E5, D#5
 );
 
 // ---- Bass: Acoustic Bass (Achtelraster je Takt) ----
@@ -36,8 +37,8 @@ let drums = stack(
 
 // ---- Loop ----
 stack(
-  melodie.note().s("gm_tenor_sax"),  // falls fehlt: s("sawtooth") o. ä.
-  bass.note().s("gm_acoustic_bass"),
-  drums
+  melodie.note().s("gm_tenor_sax").gain(mute(slider(0.545),'ö')),  // falls fehlt: s("sawtooth") o. ä.
+  bass.note().s("gm_acoustic_bass").gain(mute(slider(0.545),'ä')),
+  drums.gain(mute(slider(0.67),'#'))
 ).cpm(88 / 4)  // 88 BPM, 4/4: ein Zyklus = ein Takt
 // .clip(1) für saubere Release-Grenzen, falls gewünscht
